@@ -4,7 +4,7 @@ from PIL import Image
 import requests
 from io import BytesIO
 import numpy as np
-from shared.utils.bird_class import bird_classes
+from bird_class import bird_classes
 
 app = Flask(__name__)
 model = None
@@ -46,7 +46,7 @@ def predict():
         confidence = round(100 * prediction[0][predicted_class[0]], 2)
 
         response = {
-            "predicted_class": int(predicted_class[0] + 1),
+            "predicted_id": int(predicted_class[0] + 1),
             "confidence": confidence,
             "class_name": bird_classes[predicted_class[0]],
         }
