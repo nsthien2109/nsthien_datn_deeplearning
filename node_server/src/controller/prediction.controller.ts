@@ -1,17 +1,25 @@
-import { PredictionService } from '../services/prediction.service';
-import { Request, Response } from 'express';
+import { PredictionService } from "../services/prediction.service";
+import { Request, Response } from "express";
 
 export class PredictionController {
-	private predictionService = new PredictionService();
+  private predictionService = new PredictionService();
 
-	async fillData(request: Request, response: Response) {
-		try {
-			const result = await this.predictionService.fillData();
-			return response.send('Completed');
-		} catch (error) {
-			return response.status(500).json({ error: error });
-		}
-	}
+  async fillData(request: Request, response: Response) {
+    try {
+      const result = await this.predictionService.fillData();
+      return response.send("Completed");
+    } catch (error) {
+      return response.status(500).json({ error: error });
+    }
+  }
 
-	async prediction(request: Request, response: Response) {}
+  async prediction(request: Request, response: Response) {
+    const url: string = request.body.url;
+    try {
+      const result = await this.predictionService.prediction(url);
+      return response.status(200).json(result);
+    } catch (error) {
+      return response.status(500).json({ error: error });
+    }
+  }
 }

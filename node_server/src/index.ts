@@ -14,6 +14,7 @@ import { Routes } from "./routes";
 import { RouteType } from "./types/route.type";
 import { noneMiddleware } from "./shared/middlewares/none.middleware";
 import configPublic from "./config/config";
+import swaggerSpec from "./config/swagger";
 
 AppDataSource.initialize()
   .then(async () => {
@@ -26,10 +27,16 @@ AppDataSource.initialize()
     app.use(bodyParser.json());
     configPublic(app);
 
+    const endpoints = [
+      ...Routes.map((route) => `${route.method} ========> /api${route.route}`),
+    ];
+
+    console.log(endpoints);
+
     // register express routes from defined application routes
     Routes.forEach((route: RouteType) => {
       (app as any)[route.method](
-        route.route,
+        `/api${route.route}`,
         route.middleware?.length > 0 ? [...route.middleware] : noneMiddleware,
         (req: Request, res: Response, next: Function) => {
           const result = new (route.controller as any)()[route.action](
@@ -47,6 +54,8 @@ AppDataSource.initialize()
         }
       );
     });
+
+    app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
     // setup express app here
 

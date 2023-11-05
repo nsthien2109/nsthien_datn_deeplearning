@@ -15,6 +15,10 @@ export class HistoryService {
     });
   }
 
+  async create(data: History) {
+    return await this.historyRepository.save(data);
+  }
+
   async findByUser(user: User) {
     return this.historyRepository.findBy({ user: user });
   }

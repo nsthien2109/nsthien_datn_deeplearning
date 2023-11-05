@@ -18,7 +18,7 @@ export class History {
 
   @Column()
   @IsDate()
-  data: Date;
+  date: Date;
 
   @Column()
   @IsString()
