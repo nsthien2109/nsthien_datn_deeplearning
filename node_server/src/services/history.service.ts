@@ -15,6 +15,10 @@ export class HistoryService {
     });
   }
 
+  async count() {
+    return await this.historyRepository.count({});
+  }
+
   async create(data: History) {
     return await this.historyRepository.save(data);
   }

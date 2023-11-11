@@ -14,7 +14,6 @@ import { Routes } from "./routes";
 import { RouteType } from "./types/route.type";
 import { noneMiddleware } from "./shared/middlewares/none.middleware";
 import configPublic from "./config/config";
-import swaggerSpec from "./config/swagger";
 
 AppDataSource.initialize()
   .then(async () => {
@@ -54,10 +53,6 @@ AppDataSource.initialize()
         }
       );
     });
-
-    app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
-    // setup express app here
 
     // start express server
     app.listen(3000, () => {

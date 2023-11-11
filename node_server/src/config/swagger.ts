@@ -11,7 +11,7 @@ const options = {
       description: "Description of your API",
     },
   },
-  apis: ["**/*.ts"],
+  apis: [],
 };
 
 const swaggerSpec = swaggerJSDoc(options);

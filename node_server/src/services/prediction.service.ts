@@ -1,6 +1,6 @@
 import { AppDataSource } from "../data-source";
 
-import { Bird } from "../entity";
+import { Bird, History, Prediction } from "../entity";
 import { PredictionResult } from "../types/prediction.type";
 
 import * as fs from "fs";
@@ -17,7 +17,11 @@ cloudinary.v2.config({
 });
 
 export class PredictionService {
-  constructor(private birdRepository = AppDataSource.getRepository(Bird)) {}
+  constructor(
+    private birdRepository = AppDataSource.getRepository(Bird),
+    private historyRepository = AppDataSource.getRepository(History),
+    private predictionRepository = AppDataSource.getRepository(Prediction)
+  ) {}
 
   async fillData() {
     const csvFilePath = "http://localhost:3000/csv/birdss.csv";
@@ -43,25 +47,33 @@ export class PredictionService {
   }
 
   async prediction(url: string) {
-    const predicted = await axios.post(process.env.FLASK_API_PREDICTION, {
-      url,
-    });
-    if (predicted.data) {
-      const predict = { ...predicted.data };
+    return await axios
+      .post(process.env.FLASK_API_PREDICTION, {
+        url,
+      })
+      .then(async (result) => {
+        const predict = { ...result.data };
 
-      const bird = await this.birdRepository.findOne({
-        where: { id: predict.predicted_id },
+        if (predict.predicted_id) {
+          const bird = await this.birdRepository.findOne({
+            where: { id: predict.predicted_id },
+          });
+          const birdUrls = await cloudinary.v2.api.resources({
+            type: "upload",
+            prefix: `birds_upload/${predict.class_name}`, // add your folder
+          });
+
+          const imageUrl = { ...birdUrls.resources.map((item) => item.url) };
+
+          predict.bird = { ...bird, images: { ...imageUrl } };
+        } else {
+          throw "Image not valid";
+        }
+
+        return { ...predict };
+      })
+      .catch((err) => {
+        return err;
       });
-
-      const birdUrls = await cloudinary.v2.api.resources({
-        type: "upload",
-        prefix: `birds_upload/${predict.class_name}`, // add your folder
-      });
-
-      const imageUrl = { ...birdUrls.resources.map((item) => item.url) };
-
-      predict.bird = { ...bird, images: { ...imageUrl } };
-      return { ...predict };
-    }
   }
 }
