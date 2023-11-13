@@ -13,7 +13,10 @@ function App() {
         ))}
         <Route path="/" element={<LayoutApp />}>
           {routes.map((val: RouteType, index) => (
-            <Route key={index} path={val.path} element={<val.component />}></Route>
+            <Route key={index} path={val.path} element={<val.component />}>
+              {val.children &&
+                val.children.map((item, idx) => <Route key={idx} path={item.path} element={<item.component />} />)}
+            </Route>
           ))}
         </Route>
       </>

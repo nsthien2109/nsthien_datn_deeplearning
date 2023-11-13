@@ -71,9 +71,9 @@ const data: DataType[] = [
   },
 ];
 
-const UserPage: React.FC = () => (
+const UserList: React.FC = () => (
   <>
-    <div className="flex mb-7 items-center justify-between">
+    <div className="flex items-center justify-between mb-7">
       <Breadcrumb
         items={[
           {
@@ -92,4 +92,4 @@ const UserPage: React.FC = () => (
   </>
 );
 
-export default UserPage;
+export default UserList;
