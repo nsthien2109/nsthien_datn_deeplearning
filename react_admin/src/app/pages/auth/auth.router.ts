@@ -1,5 +1,5 @@
 import { RouteType } from '../../types/router.type';
-import Login from './container/login';
+import Login from './container/Login';
 
 export const authRoutes: RouteType[] = [
   {
