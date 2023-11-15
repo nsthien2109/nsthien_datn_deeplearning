@@ -1,20 +1,16 @@
 import { RouteType } from '../../types/router.type';
-import UserCreatePage from './container/UserCreate';
+import UserCreatePage from './components/UserCreateForm';
 import UserPage from './container/index';
 import UserList from './container/UserList';
 
 export const userRoutes: RouteType[] = [
   {
-    path: '/user',
+    path: '/users',
     component: UserPage,
     children: [
       {
         path: '',
         component: UserList,
-      },
-      {
-        path: 'create',
-        component: UserCreatePage,
       },
     ],
   },

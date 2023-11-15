@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   HistoryOutlined,
   UserOutlined,
@@ -54,7 +54,7 @@ const LayoutApp = () => {
             {
               key: '/user',
               icon: <UserOutlined />,
-              label: <Link to={'/user'}>Users</Link>,
+              label: <Link to={'/users'}>Users</Link>,
             },
             {
               key: '/birds',
