@@ -1,5 +1,4 @@
 import { RouteType } from '../../types/router.type';
-import UserCreatePage from './components/UserCreateForm';
 import UserPage from './container/index';
 import UserList from './container/UserList';
 

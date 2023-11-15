@@ -19,7 +19,7 @@ const columns: ColumnsType<DataType> = [
     title: 'Username',
     dataIndex: 'username',
     key: 'username',
-    render: (text) => <a>{text}</a>,
+    render: (text) => <Link to="/">{text}</Link>,
   },
   {
     title: 'Email',

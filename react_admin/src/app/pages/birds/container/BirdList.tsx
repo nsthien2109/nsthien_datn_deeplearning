@@ -19,16 +19,16 @@ const BirdList = () => {
               },
             ]}
           />
-          <Search className="w-96 p-4" placeholder="input search birds here" loading={false} />
+          <Search className="p-4 w-96" placeholder="input search birds here" loading={false} />
         </div>
         <div className="grid grid-cols-3 gap-5">
-          {Array.from({ length: 10 }).map((item) => {
-            return <BirdItem />;
+          {Array.from({ length: 10 }).map((item, index) => {
+            return <BirdItem key={index} />;
           })}
         </div>
 
-        <div className="pagination-box text-center mt-5">
-          <Pagination className="w-full items-center" defaultCurrent={1} total={50} />
+        <div className="mt-5 text-center pagination-box">
+          <Pagination className="items-center w-full" defaultCurrent={1} total={50} />
         </div>
       </div>
     </div>
