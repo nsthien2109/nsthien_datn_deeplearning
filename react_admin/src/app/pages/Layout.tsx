@@ -35,10 +35,10 @@ const LayoutApp = () => {
   } = theme.useToken();
 
   return (
-    <Layout className="layout min-h-screen">
+    <Layout className="min-h-screen layout" onClick={() => setOpenDropdown(false)}>
       <Sider trigger={null} collapsible collapsed={collapsed} theme="light" width={279} className="px-4">
         <img src={logo} alt="Njha detection" className="w-[90px]" />
-        {!collapsed && <h4 className="label mt-5 mb-1 uppercase">Overview</h4>}
+        {!collapsed && <h4 className="mt-5 mb-1 uppercase label">Overview</h4>}
         <Menu
           theme="light"
           mode="inline"
@@ -82,36 +82,41 @@ const LayoutApp = () => {
                 height: 64,
               }}
             />
-            <Button
-              className="rounded-full border border-[#00a76f]"
-              type="text"
-              onClick={() => setOpenDropdown(!openDropdown)}
-              style={{
-                fontSize: '16px',
-                width: 64,
-                height: 64,
-              }}
-            >
-              <div className="settings relative">
-                <img src={userAccount} alt="Nguyen Si Thien" />
-                <div
-                  className={`settings-dropdown ${
-                    !openDropdown && 'hidden'
-                  } absolute bg-white top-[110%] right-2 w-[200px] p-5 rounded-md`}
-                >
-                  <ul className="setting-list text-start">
-                    <li className="setting-item">
-                      <div className="infomation">
-                        <h5 className="username font-bold text-sm">Nguyen Si Thien</h5>
-                        <p className="email text-xs">nsthien@gmail.com</p>
-                      </div>
-                    </li>
-                    <Divider className="my-2" />
-                    <li className="setting-item text-red-500 font-bold">Logout</li>
-                  </ul>
+            <div className="flex items-center justify-center w-16 h-16">
+              <Button
+                className="rounded-full border border-[#00a76f]"
+                type="text"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  setOpenDropdown(!openDropdown);
+                }}
+                style={{
+                  fontSize: '16px',
+                  width: 40,
+                  height: 40,
+                }}
+              >
+                <div className="relative settings">
+                  <img src={userAccount} className="w-10" alt="Nguyen Si Thien" />
+                  <div
+                    className={`settings-dropdown ${
+                      !openDropdown && 'hidden'
+                    } absolute z-10 bg-white top-[110%] right-2 w-[200px] p-5 rounded-md`}
+                  >
+                    <ul className="setting-list text-start">
+                      <li className="setting-item">
+                        <div className="infomation">
+                          <h5 className="text-sm font-bold username">Nguyen Si Thien</h5>
+                          <p className="text-xs email">nsthien@gmail.com</p>
+                        </div>
+                      </li>
+                      <Divider className="my-2" />
+                      <li className="font-bold text-red-500 setting-item">Logout</li>
+                    </ul>
+                  </div>
                 </div>
-              </div>
-            </Button>
+              </Button>
+            </div>
           </div>
         </Header>
         <Content
