@@ -1,10 +1,18 @@
 import { Breadcrumb, Input, Pagination } from 'antd';
 import BirdItem from '../components/BirdItem';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { getBirdsAction } from '../bird.actions';
 
 const { Search } = Input;
 
 const BirdList = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getBirdsAction() as any);
+  }, []);
   return (
     <div className="bird">
       <div className="bird-wrapper">
