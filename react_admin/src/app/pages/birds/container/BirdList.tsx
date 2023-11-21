@@ -1,46 +1,56 @@
-import { Breadcrumb, Input, Pagination } from 'antd';
+import {Breadcrumb, Input, Pagination, Spin } from 'antd';
 import BirdItem from '../components/BirdItem';
-import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-import { getBirdsAction } from '../bird.actions';
+import {Link} from 'react-router-dom';
+import {RootState} from '../../../store/store';
+import {useDispatch, useSelector} from 'react-redux';
+import {useEffect} from 'react';
+import {getAllBirdsAction} from '../bird.actions';
 
-const { Search } = Input;
+const {Search} = Input;
 
 const BirdList = () => {
-  const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getBirdsAction() as any);
-  }, []);
-  return (
-    <div className="bird">
-      <div className="bird-wrapper">
-        <div className="flex items-center justify-between mb-7">
-          <Breadcrumb
-            items={[
-              {
-                title: <Link to="/">Dashboard</Link>,
-              },
-              {
-                title: 'Birds',
-              },
-            ]}
-          />
-          <Search className="p-4 w-96" placeholder="input search birds here" loading={false} />
-        </div>
-        <div className="grid grid-cols-3 gap-5">
-          {Array.from({ length: 10 }).map((item, index) => {
-            return <BirdItem key={index} />;
-          })}
-        </div>
+    const {birds, isLoading,currentPage, totalPages, totalItem, pageSize} = useSelector((state: RootState) => state.birds);
 
-        <div className="mt-5 text-center pagination-box">
-          <Pagination className="items-center w-full" defaultCurrent={1} total={50} />
+    useEffect(() => {
+        if(currentPage === 1){
+            dispatch(getAllBirdsAction(1) as any);
+        }
+    }, []);
+
+    const handlePaginationChange = (page :number) => {
+        dispatch(getAllBirdsAction(page) as any);
+    }
+    return (
+        <div className="bird">
+            <div className="bird-wrapper">
+                <div className="flex items-center justify-between mb-7">
+                    <Breadcrumb
+                        items={[
+                            {
+                                title: <Link to="/">Dashboard</Link>,
+                            },
+                            {
+                                title: 'Birds',
+                            },
+                        ]}
+                    />
+                    <Search className="p-4 w-96" placeholder="input search birds here" loading={false}/>
+                </div>
+                <div className="grid grid-cols-4 gap-5">
+                    {birds.map((bird, index) => {
+                        return <BirdItem bird={bird} key={index}/>;
+                    })}
+                </div>
+
+                <div className="mt-5 text-center pagination-box">
+                    <Pagination onChange={(page,_) => handlePaginationChange(page)} className="items-center w-full" current={currentPage}   total={totalItem}/>
+                </div>
+                <Spin spinning={isLoading} fullscreen />
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default BirdList;

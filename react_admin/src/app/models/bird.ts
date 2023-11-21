@@ -10,11 +10,16 @@ export interface Bird {
   diet: string;
   conservation_status: string;
   class_name: string;
+  images : string[]
 }
 
 export interface BirdState {
   birds: Bird[];
+  birdDetail : Bird;
   currentPage: number;
+  totalPages : number;
+  totalItem : number;
+  pageSize : number;
   isLoading: boolean;
   isError: boolean;
   isSuccess: boolean;

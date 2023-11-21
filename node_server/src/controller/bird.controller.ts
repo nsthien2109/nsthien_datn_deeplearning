@@ -1,5 +1,6 @@
-import { Request, Response } from "express";
-import { BirdService } from "../services/bird.service";
+import {Request, Response} from "express";
+import {BirdService} from "../services/bird.service";
+import * as cloudinary from "cloudinary";
 
 export class BirdController {
   private birdService = new BirdService();
@@ -7,8 +8,18 @@ export class BirdController {
     const page = Number(request.query.page) || 1;
     const pageSize = Number(request.query.pageSize) || 10;
     try {
-      const [results, total] = await this.birdService.findAll(page, pageSize);
+      const [data, total] = await this.birdService.findAll(page, pageSize);
       const totalPages = Math.ceil(total / pageSize);
+
+      const results = await Promise.all(data.map(async (item) => {
+        const birdUrls = await cloudinary.v2.api.resources({
+          type: "upload",
+          prefix: `birds_upload/${item.class_name}`,
+        });
+        item["images"] = birdUrls.resources.map((item: any) => item.url);
+        return { ...item };
+      }));
+
       return response.status(200).json({
         results,
         total,
@@ -27,7 +38,14 @@ export class BirdController {
     if (!bird) {
       return response.status(404).json({ error: "Bird not found" });
     } else {
+        const birdUrls = await cloudinary.v2.api.resources({
+          type: "upload",
+          prefix: `birds_upload/${bird.class_name}`,
+        });
+        bird["images"] = birdUrls.resources.map((item: any) => item.url);
       return response.status(200).json(bird);
-    }
+      }
+
+
   }
 }

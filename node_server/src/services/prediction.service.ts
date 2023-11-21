@@ -9,13 +9,6 @@ import * as csv from "csv-parser";
 import axios from "axios";
 import * as cloudinary from "cloudinary";
 
-cloudinary.v2.config({
-  cloud_name: "dmzvudfg5",
-  api_key: "614921592645376",
-  api_secret: "L98LhofuulpSFiErE_pB0G8in_g",
-  secure: true,
-});
-
 export class PredictionService {
   constructor(
     private birdRepository = AppDataSource.getRepository(Bird),

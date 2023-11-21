@@ -15,4 +15,8 @@ export const ACTION_TYPES = {
   GET_ALL_BIRD: 'getAllBird',
   GET_ALL_BIRD_SUCCESS: 'getAllBirdSuccess',
   GET_ALL_BIRD_FAILURE: 'getAllBirdFailure',
+
+  GET_BIRD : 'getBird',
+  GET_BIRD_SUCCESS : 'getBirdSuccess',
+  GET_BIRD_FAILURE : 'getBirdFailure'
 };

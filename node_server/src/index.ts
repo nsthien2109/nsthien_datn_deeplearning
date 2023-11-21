@@ -15,11 +15,20 @@ import { RouteType } from "./types/route.type";
 import { noneMiddleware } from "./shared/middlewares/none.middleware";
 import configPublic from "./config/config";
 
+import * as cloudinary from "cloudinary";
+
+cloudinary.v2.config({
+  cloud_name: "dmzvudfg5",
+  api_key: "614921592645376",
+  api_secret: "L98LhofuulpSFiErE_pB0G8in_g",
+  secure: true,
+});
+
 AppDataSource.initialize()
   .then(async () => {
     // create express app
     const app = express();
-    app.use(cors({ credentials: true }));
+    app.use(cors());
     app.use(compression());
     app.use(cookieParser());
     app.use(bodyParser.urlencoded({ extended: false }));
@@ -55,8 +64,8 @@ AppDataSource.initialize()
     });
 
     // start express server
-    app.listen(3000, () => {
-      console.log("Express server has started on port : 3000");
+    app.listen(8080, () => {
+      console.log("Express server has started on port : 8080");
     });
   })
-  .catch((error) => console.log(error));
+  .catch((error) => console.log(error) );

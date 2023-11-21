@@ -1,16 +1,26 @@
-import React from 'react';
 import { Card } from 'antd';
+import { Bird } from '../../../models/bird';
+import {Link} from "react-router-dom";
 
 const { Meta } = Card;
 
-const BirdItem: React.FC = () => (
-  <Card
-    hoverable
-    style={{ width: '100%' }}
-    cover={<img alt="example" src="https://i.pinimg.com/736x/69/e2/e9/69e2e9cd082c665dd0dff0fd98f79503.jpg" />}
+type BirdItemProps = {
+  bird: Bird;
+};
+
+const BirdItem = ({ bird }: BirdItemProps) => {
+
+  return (
+      <Link to={`${bird.id}`}>
+      <Card
+      hoverable
+      style={{width: '100%'}}
+      cover={<img alt="example" src={bird.images[0]}/>}
   >
-    <Meta title="Europe Street beat" description="www.instagram.com" />
+    <Meta title={bird.common_name} description={bird.vietnamese_name}/>
   </Card>
-);
+      </Link>
+  )
+};
 
 export default BirdItem;
