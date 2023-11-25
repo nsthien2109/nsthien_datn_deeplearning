@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Breadcrumb, Button, Space, Table, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { Link } from 'react-router-dom';
 
 import { PlusOutlined } from '@ant-design/icons';
 import UserCreateForm from '../components/UserCreateForm';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllUsersAction } from '../user.actions';
+import { RootState } from '../../../store/store';
 
 interface DataType {
   key: string;
@@ -32,7 +35,7 @@ const columns: ColumnsType<DataType> = [
     key: 'isActive',
     render: (_, record) => (
       <Tag color={record.isActive === 1 ? 'green' : 'orange-inverse'} key={record.key}>
-        {record.isActive === 1 ? 'Active' : 'Blocked'}
+        {record.isActive ? 'Active' : 'Blocked'}
       </Tag>
     ),
   },
@@ -58,37 +61,31 @@ const columns: ColumnsType<DataType> = [
   },
 ];
 
-const data: DataType[] = [
-  {
-    key: '1',
-    username: 'John Brown',
-    email: '32',
-    isActive: 1,
-    role: 2,
-  },
-  {
-    key: '3',
-    username: 'John Brown',
-    email: '32',
-    isActive: 1,
-    role: 1,
-  },
-  {
-    key: '2',
-    username: 'John Brown',
-    email: '32',
-    isActive: 1,
-    role: 1,
-  },
-];
-
 const UserList: React.FC = () => {
   const [openCreateModal, setOpenCreateModal] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const users = useSelector((state: RootState) => state.users.users);
 
   const onCreate = (values: any) => {
     console.log('Received values of form: ', values);
     onCreate(false);
   };
+
+  useEffect(() => {
+    dispatch(getAllUsersAction() as any);
+  }, []);
+
+  const userData: DataType[] = users.map((item) => {
+    return {
+      key: `${item.id}`,
+      username: item.username,
+      email: item.email,
+      isActive: parseInt(item.isActive),
+      role: item.role.id,
+    };
+  });
 
   return (
     <>
@@ -119,7 +116,7 @@ const UserList: React.FC = () => {
           }}
         />
       </div>
-      <Table columns={columns} dataSource={data} />
+      <Table columns={columns} dataSource={userData} />
     </>
   );
 };

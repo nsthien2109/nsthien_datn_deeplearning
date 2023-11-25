@@ -15,6 +15,7 @@ interface CollectionCreateFormProps {
 
 const UserCreateForm: React.FC<CollectionCreateFormProps> = ({ open, onCreate, onCancel }) => {
   const [form] = Form.useForm();
+
   return (
     <Modal
       open={open}

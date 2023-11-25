@@ -5,6 +5,7 @@ import thunk, { ThunkAction } from 'redux-thunk';
 import { loggerMiddleware } from './middleware';
 import { authReducer } from '../pages/auth/auth.reducers';
 import { birdReducer } from '../pages/birds/bird.reducer';
+import { userReducer } from '../pages/users/user.reducer';
 
 export type RootState = ReturnType<typeof rootReducer>;
 
@@ -15,6 +16,7 @@ export type RootThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, un
 export const rootReducer = combineReducers({
   auth: authReducer,
   birds: birdReducer,
+  users: userReducer,
 });
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(loggerMiddleware, thunk)));
