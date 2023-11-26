@@ -45,25 +45,24 @@ export class PredictionService {
         url,
       })
       .then(async (result) => {
-        const predict = { ...result.data };
-
-        if (predict.predicted_id) {
+        const predict = result.data;
+        let top5Birds = [];
+        for (const predictElement of predict) {
           const bird = await this.birdRepository.findOne({
-            where: { id: predict.predicted_id },
+            where: { id: predictElement.predicted_id },
           });
+
           const birdUrls = await cloudinary.v2.api.resources({
             type: "upload",
-            prefix: `birds_upload/${predict.class_name}`, // add your folder
+            prefix: `birds_upload/${predictElement.class_name}`, // add your folder
           });
 
-          const imageUrl = { ...birdUrls.resources.map((item) => item.url) };
+          const imageUrl = { ...birdUrls.resources.map((item : any) => item.url) };
 
-          predict.bird = { ...bird, images: { ...imageUrl } };
-        } else {
-          throw "Image not valid";
+          top5Birds.push({ ...bird, images: { ...imageUrl } });
         }
 
-        return { ...predict };
+        return top5Birds;
       })
       .catch((err) => {
         return err;

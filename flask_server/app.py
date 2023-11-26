@@ -45,12 +45,25 @@ def predict():
         predicted_class = np.argmax(prediction, axis=1)
         confidence = round(100 * prediction[0][predicted_class[0]], 2)
 
-        response = {
-            "predicted_id": int(predicted_class[0] + 1),
-            "confidence": confidence,
-            "class_name": bird_classes[predicted_class[0]],
-        }
-        return jsonify(response)
+        # Get the indices of the top 5 predictions
+        top_indices = np.argsort(prediction[0])[::-1][:5]
+
+        top_predictions = [
+                    {
+                        "predicted_id": int(idx + 1),
+                        "confidence": round(100 * prediction[0][idx], 2),
+                        "class_name": bird_classes[idx],
+                    }
+                    for idx in top_indices
+                ]
+
+
+#         response = {
+#             "predicted_id": int(predicted_class[0] + 1),
+#             "confidence": confidence,
+#             "class_name": bird_classes[predicted_class[0]],
+#         }
+        return jsonify(top_predictions)
     except Exception as e:
         return jsonify(error=str(e))
 
