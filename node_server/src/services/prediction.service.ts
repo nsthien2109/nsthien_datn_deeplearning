@@ -57,9 +57,9 @@ export class PredictionService {
             prefix: `birds_upload/${predictElement.class_name}`, // add your folder
           });
 
-          const imageUrl = { ...birdUrls.resources.map((item : any) => item.url) };
+          const imageUrl = birdUrls.resources.map((item : any) => item.url);
 
-          top5Birds.push({ ...bird, images: { ...imageUrl } });
+          top5Birds.push({ ...bird, images: imageUrl });
         }
 
         return top5Birds;
