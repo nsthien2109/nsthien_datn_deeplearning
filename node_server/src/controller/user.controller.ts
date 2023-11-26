@@ -28,7 +28,6 @@ export class UserController {
 
 	async update(request: Request, response: Response) {
 		const id: number = parseInt(request.params.id);
-		const oldUser = await this.userService.findById(id);
 		const user = new User();
 		user.username = request.body.username;
 		user.role = request.body.role;
@@ -36,10 +35,10 @@ export class UserController {
 		const isExistEmail = await this.userService.findByEmail(user.email);
 		const isExistUsername = await this.userService.findByUsername(user.username);
 
-		if (isExistEmail) {
+		if (isExistEmail && isExistEmail.id === id) {
 			return response.status(409).json({ error: 'Email already exist !' });
 		}
-		if (isExistUsername) {
+		if (isExistUsername && isExistUsername.id === id) {
 			return response.status(409).json({ error: 'Username already exist !' });
 		}
 

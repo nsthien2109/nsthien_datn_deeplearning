@@ -3,6 +3,7 @@ import { BirdRoute } from "./routers/bird.routes";
 import { PredictionRoutes } from "./routers/prediction.routes";
 import { RoleRoutes } from "./routers/role.routes";
 import { UserRoutes } from "./routers/user.routes";
+import {StatsRoutes} from "./routers/stats.routes";
 
 export const Routes = [
   ...RoleRoutes,
@@ -10,4 +11,5 @@ export const Routes = [
   ...AuthRoute,
   ...BirdRoute,
   ...PredictionRoutes,
+    ...StatsRoutes
 ];

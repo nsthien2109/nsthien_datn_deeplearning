@@ -1,10 +1,10 @@
 import { ACTION_TYPES } from '../../store/types';
 import { Dispatch } from 'react';
 import { RootAction } from '../../store/store';
-import { createUser, getUser, getUsers } from '../../shared/services/user.services';
+import {createUser, deleteUser, getUser, getUsers, updateUser} from '../../shared/services/user.services';
 import { data } from '../dashboard/components/ChartStatistic';
 import { message } from 'antd';
-import { User } from '../../models/user';
+import {CreateUserData, User, Role} from '../../models/user';
 
 const getAllUser = () => {
   return {
@@ -32,9 +32,9 @@ const getUserStart = () => {
   };
 };
 
-const getUserSuccess = (data: User) => {
+export const getUserData = (data: User) => {
   return {
-    type: ACTION_TYPES.GET_USER_SUCCESS,
+    type: ACTION_TYPES.GET_USER_DATA,
     payload: data,
   };
 };
@@ -61,10 +61,54 @@ const createUserSuccess = (data: User) => {
 
 const createUserFailure = (message: string) => {
   return {
-    type: ACTION_TYPES.CREATE_USER_SUCCESS,
+    type: ACTION_TYPES.CREATE_USER_FAILURE,
     payload: message,
   };
 };
+
+const deleteUserStart = () => {
+  return {
+    type: ACTION_TYPES.DELETE_USER,
+  };
+};
+
+const deleteUserSuccess = (id: number) => {
+  return {
+    type: ACTION_TYPES.DELETE_USER_SUCCESS,
+    payload : id
+  };
+};
+
+const deleteUserFailure = (message: string) => {
+  return {
+    type: ACTION_TYPES.DELETE_USER_FAILURE,
+    payload: message,
+  };
+};
+
+
+const updateUserStart = () => {
+  return {
+    type: ACTION_TYPES.UPDATE_USER,
+  };
+};
+
+const updateUserSuccess = (user: User) => {
+  return {
+    type: ACTION_TYPES.UPDATE_USER_SUCCESS,
+    payload : user
+  };
+};
+
+const updateUserFailure = (message: string) => {
+  return {
+    type: ACTION_TYPES.UPDATE_USER_FAILURE,
+    payload: message,
+  };
+};
+
+
+
 
 export const getAllUsersAction = () => async (dispatch: Dispatch<RootAction>) => {
   dispatch(getAllUser());
@@ -76,25 +120,59 @@ export const getAllUsersAction = () => async (dispatch: Dispatch<RootAction>) =>
   }
 };
 
-export const getUserAction = (idUser: number) => async (dispatch: Dispatch<RootAction>) => {
-  dispatch(getUserStart());
+export const updateUserAction = (id : number, userData: User) => async (dispatch: Dispatch<RootAction>) => {
+  dispatch(updateUserStart());
   try {
-    const data = await getUser(idUser);
-    dispatch(getUserSuccess(data as User));
+    const data = await updateUser(id, userData);
+    dispatch(updateUserSuccess(data as User));
   } catch (error) {
-    dispatch(getUserFailure(`${error}`));
+    dispatch(updateUserFailure(`${error}`));
     message.open({
       type: 'error',
-      content: `Get user failure !`,
+      content: `Update user failure !`,
     });
   }
 };
 
-export const createUserAction = (data: User) => async (dispatch: Dispatch<RootAction>) => {
+export const deleteUserAction = (idUser: number) => async (dispatch: Dispatch<RootAction>) => {
+  dispatch(deleteUserStart());
+  try {
+    await deleteUser(idUser);
+    dispatch(deleteUserSuccess(idUser));
+    message.open({
+      type: 'success',
+      content: `Delete user successfully !`,
+    });
+  } catch (error) {
+    dispatch(deleteUserFailure(`${error}`));
+    message.open({
+      type: 'error',
+      content: `Delete user failure !`,
+    });
+  }
+};
+
+export const createUserAction = (input: CreateUserData) => async (dispatch: Dispatch<RootAction>) => {
   dispatch(createUserStart());
   try {
-    const response = await createUser(data);
-    dispatch(createUserSuccess(response as User));
+    const data  :any = await createUser(input);
+    if(data.data.id){
+      const role : Role = {
+        id : data.data.role,
+        name : data.data.role === 1 ? "Admin" : "User"
+      };
+      const newUser : User = {
+        histories: [],
+        createdAt: data.data.createdAt,
+        email: data.data.email,
+        isActive: data.data.isActive,
+        role: role,
+        username: data.data.username,
+        id : data.data.id
+      };
+      dispatch(createUserSuccess(newUser));
+    }
+
   } catch (error) {
     dispatch(createUserFailure(`${error}`));
     message.open({

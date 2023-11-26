@@ -1,15 +1,11 @@
 import React from 'react';
 import { Button, Form, Input, Modal, Radio } from 'antd';
+import {CreateUserData} from "../../../models/user";
 
-interface Values {
-  title: string;
-  description: string;
-  modifier: string;
-}
 
 interface CollectionCreateFormProps {
   open: boolean;
-  onCreate: (values: Values) => void;
+  onCreate: (values: CreateUserData) => void;
   onCancel: () => void;
 }
 
@@ -23,12 +19,13 @@ const UserCreateForm: React.FC<CollectionCreateFormProps> = ({ open, onCreate, o
       onCancel={onCancel}
       footer={[
         <Button
+            key="ok-form"
           type="primary"
           className="bg-black"
           onClick={() => {
             form
               .validateFields()
-              .then((values) => {
+              .then((values : CreateUserData) => {
                 form.resetFields();
                 onCreate(values);
               })
@@ -39,7 +36,7 @@ const UserCreateForm: React.FC<CollectionCreateFormProps> = ({ open, onCreate, o
         >
           Create{' '}
         </Button>,
-        <Button type="primary" className="bg-red-500" onClick={onCancel}>
+        <Button  key="cancel-form" type="primary" className="bg-red-500" onClick={onCancel}>
           Cancel
         </Button>,
       ]}
@@ -65,10 +62,10 @@ const UserCreateForm: React.FC<CollectionCreateFormProps> = ({ open, onCreate, o
           <Input placeholder="Password" type="password" />
         </Form.Item>
 
-        <Form.Item name="modifier" label="Role" className="collection-create-form_last-form-item">
+        <Form.Item name="role" label="Role" className="collection-create-form_last-form-item">
           <Radio.Group>
-            <Radio value="public">Admin</Radio>
-            <Radio value="private">User</Radio>
+            <Radio value={1}>Admin</Radio>
+            <Radio value={2}>User</Radio>
           </Radio.Group>
         </Form.Item>
       </Form>

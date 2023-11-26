@@ -15,4 +15,16 @@ export const UserRoutes: RouteType[] = [
     controller: UserController,
     action: "findOne",
   },
+  {
+    method: "delete",
+    route: "/users/:id",
+    controller: UserController,
+    action: "remove",
+  },
+  {
+    method: "put",
+    route: "/users/:id",
+    controller: UserController,
+    action: "update",
+  },
 ];

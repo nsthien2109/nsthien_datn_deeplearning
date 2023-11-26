@@ -1,6 +1,7 @@
 import { ApiService } from '.';
 import { UserInfo } from '../../models';
 import { ENDPOINT } from '../constants';
+import {CreateUserData, User} from "../../models/user";
 
 export const getUsers = () => {
   const api = new ApiService();
@@ -12,11 +13,17 @@ export const getUser = (userId: number) => {
   return api.get(`${ENDPOINT.users.index}/${userId}`);
 };
 
-export const createUser = (data: any) => {
+export const createUser = (data: CreateUserData) => {
   const api = new ApiService();
   return api.post(`${ENDPOINT.auth.register}`, data);
 };
 
-export const updateUser = (data: UserInfo) => {};
+export const updateUser = (id : number, data: User) => {
+  const api = new ApiService();
+  return api.put(`${ENDPOINT.users.index}/${id}`, data);
+};
 
-export const deleteUser = (userId: number) => {};
+export const deleteUser = (userId: number) => {
+  const api = new ApiService();
+  return api.delete(`${ENDPOINT.users.index}/${userId}`);
+};

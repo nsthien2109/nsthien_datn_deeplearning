@@ -1,4 +1,4 @@
-interface Role {
+export interface Role {
   id: number;
   name: string;
 }
@@ -11,6 +11,13 @@ export interface User {
   createdAt: string;
   role: Role;
   histories: [];
+}
+
+export interface CreateUserData {
+  username: string;
+  email: string;
+  password: string;
+  role: number;
 }
 
 export interface UserState {

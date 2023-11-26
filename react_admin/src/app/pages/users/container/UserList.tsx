@@ -6,8 +6,10 @@ import { Link } from 'react-router-dom';
 import { PlusOutlined } from '@ant-design/icons';
 import UserCreateForm from '../components/UserCreateForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllUsersAction } from '../user.actions';
+import {createUserAction, deleteUserAction, getAllUsersAction, getUserData, updateUserAction} from '../user.actions';
 import { RootState } from '../../../store/store';
+import {CreateUserData, User} from "../../../models/user";
+import UserUpdateForm from "../components/UserUpdateForm";
 
 interface DataType {
   key: string;
@@ -15,67 +17,84 @@ interface DataType {
   email: string;
   isActive: number;
   role: number;
+  onDelete : ()=> void,
+  onEdit : () => void
 }
 
-const columns: ColumnsType<DataType> = [
-  {
-    title: 'Username',
-    dataIndex: 'username',
-    key: 'username',
-    render: (text) => <Link to="/">{text}</Link>,
-  },
-  {
-    title: 'Email',
-    dataIndex: 'email',
-    key: 'email',
-  },
-  {
-    title: 'Active',
-    dataIndex: 'isActive',
-    key: 'isActive',
-    render: (_, record) => (
-      <Tag color={record.isActive === 1 ? 'green' : 'orange-inverse'} key={record.key}>
-        {record.isActive ? 'Active' : 'Blocked'}
-      </Tag>
-    ),
-  },
-  {
-    title: 'Role',
-    key: 'role',
-    dataIndex: 'role',
-    render: (_, record) => (
-      <Tag color={record.role === 1 ? 'warning' : 'green'} key={record.key}>
-        {record.role === 1 ? 'Admin' : 'User'}
-      </Tag>
-    ),
-  },
-  {
-    title: 'Action',
-    key: 'action',
-    render: (_, record) => (
-      <Space size="middle">
-        <Button className="bg-blue-300">Edit</Button>
-        <Button className="bg-red-500">Delete</Button>
-      </Space>
-    ),
-  },
-];
+
+
+
 
 const UserList: React.FC = () => {
   const [openCreateModal, setOpenCreateModal] = useState(false);
+  const [openUpdateModal, setOpenUpdateModal] = useState(false);
+  const user = useSelector((state : RootState) => state.users.userDetail);
+
 
   const dispatch = useDispatch();
 
   const users = useSelector((state: RootState) => state.users.users);
 
-  const onCreate = (values: any) => {
-    console.log('Received values of form: ', values);
-    onCreate(false);
+
+
+  const onCreate = (values: CreateUserData) => {
+    dispatch(createUserAction(values) as any);
+    setOpenCreateModal(false);
+  };
+
+  const onUpdate = (values: User) => {
+    dispatch(updateUserAction(values.id,values) as any);
+    setOpenUpdateModal(false);
   };
 
   useEffect(() => {
     dispatch(getAllUsersAction() as any);
   }, []);
+
+  const columns: ColumnsType<DataType> = [
+    {
+      title: 'Username',
+      dataIndex: 'username',
+      key: 'username',
+      render: (text) => <Link to="/">{text}</Link>,
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
+    },
+    {
+      title: 'Active',
+      dataIndex: 'isActive',
+      key: 'isActive',
+      render: (_, record) => (
+          <Tag color={record.isActive === 1 ? 'green' : 'orange-inverse'} key={record.key}>
+            {record.isActive ? 'Active' : 'Blocked'}
+          </Tag>
+      ),
+    },
+    {
+      title: 'Role',
+      key: 'role',
+      dataIndex: 'role',
+      render: (_, record) => (
+          <Tag color={record.role === 1 ? 'warning' : 'green'} key={record.key}>
+            {record.role === 1 ? 'Admin' : 'User'}
+          </Tag>
+      ),
+    },
+    {
+      title: 'Action',
+      key: 'action',
+      render: (_, record) => (
+          <Space size="middle">
+            <Button onClick={record.onEdit} className="bg-blue-300">Edit</Button>
+            <Button onClick={record.onDelete} className="bg-red-500">Delete</Button>
+
+          </Space>
+      ),
+    },
+  ];
 
   const userData: DataType[] = users.map((item) => {
     return {
@@ -84,6 +103,13 @@ const UserList: React.FC = () => {
       email: item.email,
       isActive: parseInt(item.isActive),
       role: item.role.id,
+      onDelete : ()=> {
+        dispatch(deleteUserAction(item.id) as any)
+      },
+      onEdit : () =>{
+        dispatch(getUserData(item) as any);
+        setOpenUpdateModal(true)
+      }
     };
   });
 
@@ -115,6 +141,16 @@ const UserList: React.FC = () => {
             setOpenCreateModal(false);
           }}
         />
+
+        <UserUpdateForm
+            user={user}
+            open={openUpdateModal}
+            onUpdate={onUpdate}
+            onCancel={() => {
+              setOpenUpdateModal(false);
+            }}
+        />
+
       </div>
       <Table columns={columns} dataSource={userData} />
     </>

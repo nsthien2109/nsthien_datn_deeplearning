@@ -6,6 +6,7 @@ import { loggerMiddleware } from './middleware';
 import { authReducer } from '../pages/auth/auth.reducers';
 import { birdReducer } from '../pages/birds/bird.reducer';
 import { userReducer } from '../pages/users/user.reducer';
+import {dashboardReducer} from "../pages/dashboard/dashboard.reducer";
 
 export type RootState = ReturnType<typeof rootReducer>;
 
@@ -17,6 +18,7 @@ export const rootReducer = combineReducers({
   auth: authReducer,
   birds: birdReducer,
   users: userReducer,
+  dashboard : dashboardReducer
 });
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(loggerMiddleware, thunk)));
