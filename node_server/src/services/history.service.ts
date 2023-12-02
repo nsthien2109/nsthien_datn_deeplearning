@@ -9,8 +9,10 @@ export class HistoryService {
   async findAll() {
     return await this.historyRepository.find({
       relations: {
-        predictions: true,
-        user: true,
+        predictions: {
+          bird: true,
+        },
+        user: {},
       },
     });
   }
@@ -24,7 +26,14 @@ export class HistoryService {
   }
 
   async findByUser(user: User) {
-    return this.historyRepository.findBy({ user: user });
+    return this.historyRepository.findBy({
+      user: user,
+      relations: {
+        predictions: {
+          bird: true,
+        },
+      },
+    });
   }
 
   async remove(id: number) {

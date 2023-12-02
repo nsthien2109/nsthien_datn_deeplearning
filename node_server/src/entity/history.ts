@@ -28,7 +28,7 @@ export class History {
   @JoinColumn()
   predictions: Prediction[];
 
-  @ManyToOne(() => User, (user) => user.histories)
+  @ManyToOne(() => User, (user) => user.id)
   @JoinColumn()
   user: User;
 }

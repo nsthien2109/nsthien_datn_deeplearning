@@ -1,32 +1,60 @@
 import React from 'react';
-import {Image} from "antd";
+import { Bird } from '../../../models/bird';
 
-const BestPrediction = () => {
+import { Image } from 'antd';
+type BestPredictionProps = {
+  bird: Bird;
+};
+
+const BestPrediction = ({ bird }: BestPredictionProps) => {
   return (
     <div className="best-prediction">
-      <div className="flex gap-10">
-
-        <div className="pre-info flex-1">
-          <ul className="pre-info-list border border-dotted p-4 rounded bg-gray-300">
-            <li className="pre-info-item mb-4"><span className="font-semibold">Common Name : </span>Abbott's Babbler</li>
-            <li className="pre-info-item mb-4"><span className="font-semibold">Vietnamese Name : </span>Chim Tòng quạ</li>
-            <li className="pre-info-item mb-4"><span className="font-semibold">Scientific Name : </span>Zosterops maderaspatanus</li>
-            <li className="pre-info-item mb-4"><span className="font-semibold">Bird Order : </span>Passeriformes - Bộ Sẻ</li>
-            <li className="pre-info-item mb-4"><span className="font-semibold">Family : </span>Zosteropidae - Họ Vành khuyên</li>
-            <li className="pre-info-item mb-4"><span className="font-semibold">Description : </span>Malagasy White-eye là một loài chim nhỏ, có kích thước trung bình đến nhỏ. Chúng có lông màu xanh lá cây trên lưng và màu trắng trên bụng, ngực và mặt dưới. Mắt của chim có vòng trắng xung quanh, tạo nên vẻ đặc trưng cho loài chim này.</li>
-            <li className="pre-info-item mb-4"><span className="font-semibold">Distribution : </span>Loài chim này được tìm thấy ở các khu vực rừng ẩm ướt và cận nhiệt đới trên đảo Madagascar, nơi chúng sinh sống trong các khu rừng, cánh đồng và vùng cây bụi.</li>
-            <li className="pre-info-item mb-4"><span className="font-semibold">Diet : </span>Malagasy White-eye chủ yếu ăn hoa, mật, trái cây và côn trùng nhỏ. Chúng thường di chuyển trong nhóm nhỏ để tìm kiếm nguồn thức ăn trên cây và bụi.</li>
-            <li className="pre-info-item mb-4"><span className="font-semibold">Status : </span>Least Concern - Ít quan tâm</li>
+      <div className="flex gap-5">
+        <div className="flex-1 pre-info">
+          <ul className="p-4 bg-gray-300 border border-dotted rounded pre-info-list">
+            <li className="mb-4 pre-info-item">
+              <span className="font-semibold">Common Name : </span>
+              {bird.common_name}
+            </li>
+            <li className="mb-4 pre-info-item">
+              <span className="font-semibold">Vietnamese Name : </span>
+              {bird.vietnamese_name}
+            </li>
+            <li className="mb-4 pre-info-item">
+              <span className="font-semibold">Scientific Name : </span>
+              {bird.scientific_name}
+            </li>
+            <li className="mb-4 pre-info-item">
+              <span className="font-semibold">Bird Order : </span>
+              {bird.bird_order}
+            </li>
+            <li className="mb-4 pre-info-item">
+              <span className="font-semibold">Family : </span>
+              {bird.family}
+            </li>
+            <li className="mb-4 pre-info-item">
+              <span className="font-semibold">Description : </span>
+              {bird.description}
+            </li>
+            <li className="mb-4 pre-info-item">
+              <span className="font-semibold">Distribution : </span>
+              {bird.distribution}
+            </li>
+            <li className="mb-4 pre-info-item">
+              <span className="font-semibold">Diet : </span>
+              {bird.diet}
+            </li>
+            <li className="mb-4 pre-info-item">
+              <span className="font-semibold">Status : </span>
+              {bird.conservation_status}
+            </li>
           </ul>
         </div>
 
         <div className="pre-image w-[150px] h-[150px]">
-          <Image
-            className="object-cover rounded"
-            width={150}
-            height={150}
-            src="https://images.kienthuc.net.vn/zoom/800/Uploaded/quocquan/2022_01_22/img_61e7d53e16140_TPTQ.jpg"
-          />
+          <Image.PreviewGroup items={bird.images}>
+            <Image className="object-cover rounded" width={150} height={150} src={bird.images[0]} />
+          </Image.PreviewGroup>
         </div>
       </div>
     </div>

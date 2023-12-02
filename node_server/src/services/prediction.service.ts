@@ -39,6 +39,10 @@ export class PredictionService {
       });
   }
 
+  async create(data: Prediction) {
+    return await this.predictionRepository.save(data);
+  }
+
   async prediction(url: string) {
     return await axios
       .post(process.env.FLASK_API_PREDICTION, {
@@ -54,12 +58,16 @@ export class PredictionService {
 
           const birdUrls = await cloudinary.v2.api.resources({
             type: "upload",
-            prefix: `birds_upload/${predictElement.class_name}`, // add your folder
+            prefix: `birds_upload/${predictElement.class_name}`,
           });
 
-          const imageUrl = birdUrls.resources.map((item : any) => item.url);
+          const imageUrl = birdUrls.resources.map((item: any) => item.url);
 
-          top5Birds.push({ ...bird, images: imageUrl });
+          top5Birds.push({
+            ...bird,
+            confidence: predictElement.confidence,
+            images: imageUrl,
+          });
         }
 
         return top5Birds;

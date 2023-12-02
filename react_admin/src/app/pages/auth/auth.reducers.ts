@@ -62,7 +62,7 @@ export const authReducer = (state = initState, action: RootAction): AuthState =>
       };
     }
 
-    case ACTION_TYPES.LOGIN_FAILURE: {
+    case ACTION_TYPES.LOGOUT_FAILURE: {
       return {
         ...state,
         isLoading: false,

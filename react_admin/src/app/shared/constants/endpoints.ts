@@ -23,4 +23,7 @@ export const ENDPOINT = {
   users: {
     index: `${BASE_URL}/${RESOURCES.users}`,
   },
+  prediction : {
+    index : `${BASE_URL}/${RESOURCES.prediction}`
+  }
 };

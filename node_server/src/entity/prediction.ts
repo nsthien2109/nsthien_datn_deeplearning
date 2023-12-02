@@ -18,7 +18,7 @@ export class Prediction {
   @IsNumber()
   confidence: number;
 
-  @ManyToOne(() => History, (history) => history.predictions)
+  @ManyToOne(() => History, (history) => history.id)
   @JoinColumn()
   history: History;
 

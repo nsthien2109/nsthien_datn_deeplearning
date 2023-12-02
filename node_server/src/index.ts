@@ -31,7 +31,7 @@ AppDataSource.initialize()
     app.use(cors());
     app.use(compression());
     app.use(cookieParser());
-    app.use(bodyParser.urlencoded({ extended: false }));
+    app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
     configPublic(app);
 
@@ -68,4 +68,4 @@ AppDataSource.initialize()
       console.log("Express server has started on port : 8080");
     });
   })
-  .catch((error) => console.log(error) );
+  .catch((error) => console.log(error));

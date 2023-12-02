@@ -1,16 +1,18 @@
-import { Card } from 'antd';
 import React from 'react';
-import OutputItem from "./OutputItem";
-const { Meta } = Card;
+import OutputItem from './OutputItem';
 
-const OutputList = () => {
+import { Prediction } from '../../../models/prediction';
+
+type OutputListProps = {
+  predictions: Prediction[];
+};
+
+const OutputList = ({ predictions }: OutputListProps) => {
   return (
-    <div className="output-list grid grid-cols-5 gap-3">
-      <OutputItem/>
-      <OutputItem/>
-      <OutputItem/>
-      <OutputItem/>
-      <OutputItem/>
+    <div className="grid grid-cols-5 gap-3 output-list">
+      {predictions.map((item, index) => (
+        <OutputItem key={index} bird={item} />
+      ))}
     </div>
   );
 };

@@ -39,4 +39,8 @@ export const ACTION_TYPES = {
   GET_BIRD: 'getBird',
   GET_BIRD_SUCCESS: 'getBirdSuccess',
   GET_BIRD_FAILURE: 'getBirdFailure',
+
+  PREDICTION_BIRD: 'predictionBird',
+  PREDICTION_BIRD_SUCCESS: 'predictionBirdSuccess',
+  PREDICTION_BIRD_FAILURE: 'predictionBirdFailure',
 };

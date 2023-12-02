@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { HistoryService } from "../services/history.service";
 import { UserService } from "../services/user.service";
-import { User } from "../entity";
+import { User, History } from "../entity";
 
 export class HistoryController {
   private historyService = new HistoryService();
@@ -10,7 +10,11 @@ export class HistoryController {
   async getAll(request: Request, response: Response) {
     try {
       const result = await this.historyService.findAll();
-      return response.status(200).json(result);
+      const data = result.map((item) => {
+        delete item["user"]["password"];
+        return item;
+      });
+      return response.status(200).json(data);
     } catch (error) {
       return response.status(500).json({ error: error });
     }
