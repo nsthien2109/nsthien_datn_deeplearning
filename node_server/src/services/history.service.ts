@@ -26,13 +26,13 @@ export class HistoryService {
   }
 
   async findByUser(user: User) {
-    return this.historyRepository.findBy({
-      user: user,
+    return this.historyRepository.find({
       relations: {
         predictions: {
           bird: true,
         },
       },
+      where: { user: user },
     });
   }
 

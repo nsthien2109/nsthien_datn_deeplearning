@@ -9,7 +9,11 @@ export class UserService {
     return await this.userRepository.find({
       relations: {
         role: true,
-        histories: true,
+        histories: {
+          predictions: {
+            bird: true,
+          },
+        },
       },
     });
   }

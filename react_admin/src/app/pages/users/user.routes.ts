@@ -11,6 +11,10 @@ export const userRoutes: RouteType[] = [
         path: '',
         component: UserList,
       },
+      {
+        path: ':userId',
+        component: UserList,
+      },
     ],
   },
 ];

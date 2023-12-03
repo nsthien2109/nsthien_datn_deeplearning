@@ -1,3 +1,4 @@
+import { History } from './history';
 export interface Role {
   id: number;
   name: string;
@@ -10,7 +11,7 @@ export interface User {
   isActive: string;
   createdAt: string;
   role: Role;
-  histories: [];
+  histories: History[];
 }
 
 export interface CreateUserData {

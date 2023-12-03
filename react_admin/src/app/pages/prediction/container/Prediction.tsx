@@ -9,10 +9,11 @@ import BestPrediction from '../components/BestPrediction';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
 import { predictionBirdAction } from '../prediction.actions';
+import HistoryModal from '../components/HistoryModal';
 
 const Prediction = () => {
   const [photoPreview, setPhotoPreview] = useState<string>();
-
+  const [openHistoryModal, setOpenHistoryModal] = useState(false);
   const { predictions, isLoading, isSuccess, isError } = useSelector((state: RootState) => state.prediction);
 
   const dispatch = useDispatch();
@@ -36,8 +37,13 @@ const Prediction = () => {
               },
             ]}
           />
-          <Button type="primary" className="bg-[#212B36]" icon={<FileSearchOutlined />} onClick={() => {}}>
-            Predicted
+          <Button
+            type="primary"
+            className="bg-[#212B36]"
+            icon={<FileSearchOutlined />}
+            onClick={() => setOpenHistoryModal(true)}
+          >
+            History
           </Button>
         </div>
         <div className="flex gap-5 prediction-wrapper">
@@ -61,6 +67,12 @@ const Prediction = () => {
           )}
           {isLoading && <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />}
         </div>
+        <HistoryModal
+          open={openHistoryModal}
+          onCancel={() => {
+            setOpenHistoryModal(false);
+          }}
+        />
       </div>
     </>
   );

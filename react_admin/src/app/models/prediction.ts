@@ -1,3 +1,4 @@
+import { History } from './history';
 export interface Prediction {
   id: number;
   common_name: string;
@@ -16,6 +17,7 @@ export interface Prediction {
 
 export interface PredictionState {
   predictions: Prediction[];
+  history: History[];
   isLoading: boolean;
   isError: boolean;
   isSuccess: boolean;

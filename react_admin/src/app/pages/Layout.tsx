@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 import {
-  HistoryOutlined,
   UserOutlined,
   YuqueOutlined,
   DashboardOutlined,
   CaretRightOutlined,
   CaretLeftOutlined,
-    ScanOutlined
+  ScanOutlined,
 } from '@ant-design/icons';
 import { Layout, Menu, Button, theme, Divider } from 'antd';
 
@@ -62,15 +61,10 @@ const LayoutApp = () => {
               icon: <YuqueOutlined />,
               label: <Link to={'/birds'}>Birds</Link>,
             },
-              {
-                  key: '/prediction',
-                  icon: <ScanOutlined />,
-                  label: <Link to={'/prediction'}>Prediction</Link>,
-              },
             {
-              key: '/history',
-              icon: <HistoryOutlined />,
-              label: <Link to={'/history'}>History</Link>,
+              key: '/prediction',
+              icon: <ScanOutlined />,
+              label: <Link to={'/prediction'}>Prediction</Link>,
             },
           ]}
         />

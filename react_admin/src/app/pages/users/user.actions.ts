@@ -1,10 +1,9 @@
 import { ACTION_TYPES } from '../../store/types';
 import { Dispatch } from 'react';
 import { RootAction } from '../../store/store';
-import {createUser, deleteUser, getUser, getUsers, updateUser} from '../../shared/services/user.services';
-import { data } from '../dashboard/components/ChartStatistic';
+import { createUser, deleteUser, getUsers, updateUser } from '../../shared/services/user.services';
 import { message } from 'antd';
-import {CreateUserData, User, Role} from '../../models/user';
+import { CreateUserData, User, Role } from '../../models/user';
 
 const getAllUser = () => {
   return {
@@ -26,23 +25,10 @@ const getAllUserFailure = (message: string) => {
   };
 };
 
-const getUserStart = () => {
-  return {
-    type: ACTION_TYPES.GET_USER,
-  };
-};
-
 export const getUserData = (data: User) => {
   return {
     type: ACTION_TYPES.GET_USER_DATA,
     payload: data,
-  };
-};
-
-const getUserFailure = (message: string) => {
-  return {
-    type: ACTION_TYPES.GET_USER_FAILURE,
-    payload: message,
   };
 };
 
@@ -75,7 +61,7 @@ const deleteUserStart = () => {
 const deleteUserSuccess = (id: number) => {
   return {
     type: ACTION_TYPES.DELETE_USER_SUCCESS,
-    payload : id
+    payload: id,
   };
 };
 
@@ -86,7 +72,6 @@ const deleteUserFailure = (message: string) => {
   };
 };
 
-
 const updateUserStart = () => {
   return {
     type: ACTION_TYPES.UPDATE_USER,
@@ -96,7 +81,7 @@ const updateUserStart = () => {
 const updateUserSuccess = (user: User) => {
   return {
     type: ACTION_TYPES.UPDATE_USER_SUCCESS,
-    payload : user
+    payload: user,
   };
 };
 
@@ -106,9 +91,6 @@ const updateUserFailure = (message: string) => {
     payload: message,
   };
 };
-
-
-
 
 export const getAllUsersAction = () => async (dispatch: Dispatch<RootAction>) => {
   dispatch(getAllUser());
@@ -120,7 +102,7 @@ export const getAllUsersAction = () => async (dispatch: Dispatch<RootAction>) =>
   }
 };
 
-export const updateUserAction = (id : number, userData: User) => async (dispatch: Dispatch<RootAction>) => {
+export const updateUserAction = (id: number, userData: User) => async (dispatch: Dispatch<RootAction>) => {
   dispatch(updateUserStart());
   try {
     const data = await updateUser(id, userData);
@@ -155,24 +137,23 @@ export const deleteUserAction = (idUser: number) => async (dispatch: Dispatch<Ro
 export const createUserAction = (input: CreateUserData) => async (dispatch: Dispatch<RootAction>) => {
   dispatch(createUserStart());
   try {
-    const data  :any = await createUser(input);
-    if(data.data.id){
-      const role : Role = {
-        id : data.data.role,
-        name : data.data.role === 1 ? "Admin" : "User"
+    const data: any = await createUser(input);
+    if (data.data.id) {
+      const role: Role = {
+        id: data.data.role,
+        name: data.data.role === 1 ? 'Admin' : 'User',
       };
-      const newUser : User = {
+      const newUser: User = {
         histories: [],
         createdAt: data.data.createdAt,
         email: data.data.email,
         isActive: data.data.isActive,
         role: role,
         username: data.data.username,
-        id : data.data.id
+        id: data.data.id,
       };
       dispatch(createUserSuccess(newUser));
     }
-
   } catch (error) {
     dispatch(createUserFailure(`${error}`));
     message.open({

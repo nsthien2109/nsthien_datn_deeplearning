@@ -6,10 +6,11 @@ import { Link } from 'react-router-dom';
 import { PlusOutlined } from '@ant-design/icons';
 import UserCreateForm from '../components/UserCreateForm';
 import { useDispatch, useSelector } from 'react-redux';
-import {createUserAction, deleteUserAction, getAllUsersAction, getUserData, updateUserAction} from '../user.actions';
+import { createUserAction, deleteUserAction, getAllUsersAction, getUserData, updateUserAction } from '../user.actions';
 import { RootState } from '../../../store/store';
-import {CreateUserData, User} from "../../../models/user";
-import UserUpdateForm from "../components/UserUpdateForm";
+import { CreateUserData, User } from '../../../models/user';
+import UserUpdateForm from '../components/UserUpdateForm';
+import HistoryModal from '../components/HistoryModal';
 
 interface DataType {
   key: string;
@@ -17,25 +18,19 @@ interface DataType {
   email: string;
   isActive: number;
   role: number;
-  onDelete : ()=> void,
-  onEdit : () => void
+  onView: () => void;
+  onDelete: () => void;
+  onEdit: () => void;
 }
-
-
-
-
 
 const UserList: React.FC = () => {
   const [openCreateModal, setOpenCreateModal] = useState(false);
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
-  const user = useSelector((state : RootState) => state.users.userDetail);
-
+  const [openHistoryModal, setOpenHistoryModal] = useState(false);
+  const user = useSelector((state: RootState) => state.users.userDetail);
 
   const dispatch = useDispatch();
-
   const users = useSelector((state: RootState) => state.users.users);
-
-
 
   const onCreate = (values: CreateUserData) => {
     dispatch(createUserAction(values) as any);
@@ -43,7 +38,7 @@ const UserList: React.FC = () => {
   };
 
   const onUpdate = (values: User) => {
-    dispatch(updateUserAction(values.id,values) as any);
+    dispatch(updateUserAction(values.id, values) as any);
     setOpenUpdateModal(false);
   };
 
@@ -68,9 +63,9 @@ const UserList: React.FC = () => {
       dataIndex: 'isActive',
       key: 'isActive',
       render: (_, record) => (
-          <Tag color={record.isActive === 1 ? 'green' : 'orange-inverse'} key={record.key}>
-            {record.isActive ? 'Active' : 'Blocked'}
-          </Tag>
+        <Tag color={record.isActive === 1 ? 'green' : 'orange-inverse'} key={record.key}>
+          {record.isActive ? 'Active' : 'Blocked'}
+        </Tag>
       ),
     },
     {
@@ -78,20 +73,26 @@ const UserList: React.FC = () => {
       key: 'role',
       dataIndex: 'role',
       render: (_, record) => (
-          <Tag color={record.role === 1 ? 'warning' : 'green'} key={record.key}>
-            {record.role === 1 ? 'Admin' : 'User'}
-          </Tag>
+        <Tag color={record.role === 1 ? 'warning' : 'green'} key={record.key}>
+          {record.role === 1 ? 'Admin' : 'User'}
+        </Tag>
       ),
     },
     {
       title: 'Action',
       key: 'action',
       render: (_, record) => (
-          <Space size="middle">
-            <Button onClick={record.onEdit} className="bg-blue-300">Edit</Button>
-            <Button onClick={record.onDelete} className="bg-red-500">Delete</Button>
-
-          </Space>
+        <Space size="middle">
+          <Button onClick={record.onView} className="bg-blue-300">
+            View History
+          </Button>
+          <Button onClick={record.onEdit} className="bg-blue-300">
+            Edit
+          </Button>
+          <Button onClick={record.onDelete} className="bg-red-500">
+            Delete
+          </Button>
+        </Space>
       ),
     },
   ];
@@ -103,13 +104,17 @@ const UserList: React.FC = () => {
       email: item.email,
       isActive: parseInt(item.isActive),
       role: item.role.id,
-      onDelete : ()=> {
-        dispatch(deleteUserAction(item.id) as any)
-      },
-      onEdit : () =>{
+      onView: () => {
         dispatch(getUserData(item) as any);
-        setOpenUpdateModal(true)
-      }
+        setOpenHistoryModal(true);
+      },
+      onDelete: () => {
+        dispatch(deleteUserAction(item.id) as any);
+      },
+      onEdit: () => {
+        dispatch(getUserData(item) as any);
+        setOpenUpdateModal(true);
+      },
     };
   });
 
@@ -143,14 +148,19 @@ const UserList: React.FC = () => {
         />
 
         <UserUpdateForm
-            user={user}
-            open={openUpdateModal}
-            onUpdate={onUpdate}
-            onCancel={() => {
-              setOpenUpdateModal(false);
-            }}
+          user={user}
+          open={openUpdateModal}
+          onUpdate={onUpdate}
+          onCancel={() => {
+            setOpenUpdateModal(false);
+          }}
         />
-
+        <HistoryModal
+          open={openHistoryModal}
+          onCancel={() => {
+            setOpenHistoryModal(false);
+          }}
+        />
       </div>
       <Table columns={columns} dataSource={userData} />
     </>

@@ -43,6 +43,16 @@ export class PredictionService {
     return await this.predictionRepository.save(data);
   }
 
+  async findByHistoryId(idHistory: number) {
+    return await this.predictionRepository.findBy({
+      history: { id: idHistory },
+    });
+  }
+
+  async remove(id: number) {
+    return await this.predictionRepository.delete(id);
+  }
+
   async prediction(url: string) {
     return await axios
       .post(process.env.FLASK_API_PREDICTION, {
