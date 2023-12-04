@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:njha_bird_detect/app/screens/auth/login_screen.dart';
+import 'package:njha_bird_detect/app/screens/auth/register_screen.dart';
+import 'package:njha_bird_detect/app/screens/detail/detail_screen.dart';
 import 'package:njha_bird_detect/app/screens/home/home.dart';
+import 'package:njha_bird_detect/app/screens/intro/intro_screen.dart';
+import 'package:njha_bird_detect/app/screens/layout.dart';
 
 class AppRouter {
-  static const String introRouter = '/intro';
-  static const String mainRouter = '/';
+  static const String introRoute = '/intro';
+  static const String mainRoute = '/';
   static const String loginRoute = '/login';
   static const String registerRoute = '/register';
   static const String favoriteRoute = '/favorite';
@@ -14,11 +19,34 @@ class AppRouter {
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
-
-      case mainRouter:
+      case introRoute:
         return MaterialPageRoute(
           settings: settings,
-          builder: (_) => const HomeScreen(),
+          builder: (_) => const IntroScreen(),
+        );
+
+      case loginRoute:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => const LoginScreen(),
+        );
+
+      case registerRoute:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => const RegisterScreen(),
+        );
+
+      case detailRouter:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => const DetailScreen(),
+        );
+
+      case mainRoute:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => const Layout(),
         );
 
       default:
