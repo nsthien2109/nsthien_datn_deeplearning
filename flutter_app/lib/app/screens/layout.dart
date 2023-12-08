@@ -5,6 +5,7 @@ import 'package:njha_bird_detect/app/screens/history/history_screen.dart';
 import 'package:njha_bird_detect/app/screens/home/home.dart';
 import 'package:njha_bird_detect/app/screens/layout.provider.dart';
 import 'package:njha_bird_detect/app/screens/profile/profile_screen.dart';
+import 'package:njha_bird_detect/app/shared/widgets/choose_image_options.dart';
 import 'package:njha_bird_detect/app/shared/widgets/nav_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +27,9 @@ class Layout extends StatelessWidget {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () => showModalBottomSheet(
+              context: context,
+              builder: (BuildContext context) => const ChooseImageOptions()),
           child: const Icon(Iconsax.scan),
         ),
         bottomNavigationBar: NavBar(

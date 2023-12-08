@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:njha_bird_detect/app/models/bird.dart';
 import 'package:njha_bird_detect/app/shared/utils/cache_image.dart';
 import 'package:njha_bird_detect/app/shared/utils/theme.dart';
 
 class BirdItem extends StatelessWidget {
-  const BirdItem({super.key});
+  Bird bird;
+  BirdItem({super.key, required this.bird});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,7 @@ class BirdItem extends StatelessWidget {
         color: Colors.white,
         child: GestureDetector(
           behavior: HitTestBehavior.translucent,
-          onTap: () => Navigator.pushNamed(context, '/detail'),
+          onTap: () => Navigator.pushNamed(context, '/detail', arguments: bird),
           child: Column(
             children: [
               ClipRRect(
@@ -26,24 +28,21 @@ class BirdItem extends StatelessWidget {
                 child: cacheImageNetwork(
                     width: boxImageSize,
                     height: boxImageSize,
-                    url:
-                        "https://i.gadgets360cdn.com/large/kingfisher_pixabay_1482398008037.jpg"),
+                    url: bird.images![0]),
               ),
               Container(
-                  margin: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-                  child: const Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Chim vanh khuyen",
-                        style: TextStyle(fontSize: 12),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
-                  )),
+                alignment: AlignmentDirectional.centerStart,
+                margin: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+                child: Text(
+                  bird.commonName!,
+                  style: const TextStyle(
+                      fontSize: 14, fontWeight: FontWeight.w600),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
               Container(
-                margin: const EdgeInsets.only(top: 5),
+                margin: const EdgeInsets.fromLTRB(8, 8, 8, 8),
                 child: const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

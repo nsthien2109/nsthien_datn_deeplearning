@@ -9,18 +9,18 @@ dynamic setLocalStorage(key, dynamic value) async {
 }
 
 dynamic getLocalStorage(key) async {
-    Future<SharedPreferences> prefs = SharedPreferences.getInstance();
-    final SharedPreferences preferences = await prefs;
-    return preferences.get(key);
+  Future<SharedPreferences> prefs = SharedPreferences.getInstance();
+  final SharedPreferences preferences = await prefs;
+  return preferences.get(key);
 }
 
- Future removeLocalStorage(key) async{
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    return preferences.remove(key);
-  }
+Future removeLocalStorage(key) async {
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+  return preferences.remove(key);
+}
 
-  Future resetStorage() async {
-      Future<SharedPreferences> prefs = SharedPreferences.getInstance();
-      final SharedPreferences preferences = await prefs;
-      return preferences.clear();
-  }
+Future resetStorage() async {
+  Future<SharedPreferences> prefs = SharedPreferences.getInstance();
+  final SharedPreferences preferences = await prefs;
+  return preferences.clear();
+}

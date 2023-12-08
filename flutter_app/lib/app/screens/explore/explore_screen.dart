@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:njha_bird_detect/app/screens/explore/explore.provider.dart';
 import 'package:njha_bird_detect/app/screens/explore/widgets/bird_list.dart';
 import 'package:njha_bird_detect/app/shared/utils/theme.dart';
+import 'package:provider/provider.dart';
 
 class ExploreScreen extends StatelessWidget {
   const ExploreScreen({super.key});
@@ -30,7 +32,13 @@ class ExploreScreen extends StatelessWidget {
               onPressed: () {}),
         ],
       ),
-      body: BirdList(),
+      body: Consumer<ExploreProvider>(builder: (context, exploreState, _) {
+        // return BirdList(
+        //   birds: exploreState.birds,
+        //   refreshPage: exploreState.getBird(1),
+        // );
+        return Container();
+      }),
     );
   }
 }

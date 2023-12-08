@@ -9,6 +9,8 @@ class Bird {
   String? distribution;
   String? diet;
   String? conservationStatus;
+  String? className;
+  List<String>? images;
 
   Bird(
       {this.id,
@@ -20,7 +22,9 @@ class Bird {
       this.description,
       this.distribution,
       this.diet,
-      this.conservationStatus});
+      this.conservationStatus,
+      this.className,
+      this.images});
 
   Bird.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -33,6 +37,8 @@ class Bird {
     distribution = json['distribution'];
     diet = json['diet'];
     conservationStatus = json['conservation_status'];
+    className = json['class_name'];
+    images = json['images'].cast<String>();
   }
 
   Map<String, dynamic> toJson() {
@@ -47,6 +53,8 @@ class Bird {
     data['distribution'] = distribution;
     data['diet'] = diet;
     data['conservation_status'] = conservationStatus;
+    data['class_name'] = className;
+    data['images'] = images;
     return data;
   }
 }

@@ -9,7 +9,6 @@ class RegisterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const String birdSvg = "assets/images/bird-svg.svg";
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: Stack(
