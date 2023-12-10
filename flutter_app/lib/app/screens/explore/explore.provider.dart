@@ -18,7 +18,7 @@ class ExploreProvider extends ChangeNotifier {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
         // Load more data when reaching the bottom
-        // await getBird(_currentPage);
+        await getBird(_currentPage);
       }
     });
   }

@@ -1,6 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:njha_bird_detect/app/models/bird.dart';
+import 'package:njha_bird_detect/app/screens/detail/widgets/description.dart';
+import 'package:njha_bird_detect/app/screens/detail/widgets/overview.dart';
 import 'package:njha_bird_detect/app/shared/utils/cache_image.dart';
 import 'package:njha_bird_detect/app/shared/utils/theme.dart';
 
@@ -30,97 +33,122 @@ class DetailScreen extends StatelessWidget {
               )),
           actions: [
             IconButton(
-                icon: const Icon(Icons.search, color: AppColors.blackGrey),
+                icon: const Icon(Iconsax.heart, color: AppColors.blackGrey),
                 onPressed: () {}),
           ],
         ),
         body: SafeArea(
-            child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 300,
-              child: Stack(
-                children: [
-                  CarouselSlider(
-                      items: [
-                        ...bird.images!.map(
-                          (item) => SizedBox(
-                              width: widthP(context),
-                              child: cacheImageNetwork(
-                                  url: item,
-                                  width: widthP(context),
-                                  height: 300)),
-                        )
-                      ],
-                      options: CarouselOptions(
-                          height: 300,
-                          aspectRatio: 16 / 9,
-                          viewportFraction: 1,
-                          initialPage: 0,
-                          enableInfiniteScroll: true,
-                          reverse: false,
-                          autoPlay: true,
-                          autoPlayInterval: const Duration(seconds: 5),
-                          autoPlayAnimationDuration:
-                              const Duration(microseconds: 800),
-                          enlargeCenterPage: true,
-                          enlargeFactor: 0.3,
-                          scrollDirection: Axis.horizontal)),
-                  Positioned(
-                      bottom: 20,
-                      child: Container(
-                        padding: const EdgeInsets.all(10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(bird.commonName!,
-                                style: const TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: AppSize.f2)),
-                            Row(
-                              children: [
-                                const Text("Order Bird",
-                                    style: TextStyle(color: Colors.white)),
-                                const SizedBox(width: 10),
-                                Container(
-                                  width: 6,
-                                  height: 6,
-                                  decoration: BoxDecoration(
+            child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 300,
+                child: Stack(
+                  children: [
+                    CarouselSlider(
+                        items: [
+                          ...bird.images!.map(
+                            (item) => SizedBox(
+                                width: widthP(context),
+                                child: cacheImageNetwork(
+                                    url: item,
+                                    width: widthP(context),
+                                    height: 300)),
+                          )
+                        ],
+                        options: CarouselOptions(
+                            height: 300,
+                            aspectRatio: 16 / 9,
+                            viewportFraction: 1,
+                            initialPage: 0,
+                            enableInfiniteScroll: true,
+                            reverse: false,
+                            autoPlay: true,
+                            autoPlayInterval: const Duration(seconds: 5),
+                            autoPlayAnimationDuration:
+                                const Duration(microseconds: 800),
+                            enlargeCenterPage: true,
+                            enlargeFactor: 0.3,
+                            scrollDirection: Axis.horizontal)),
+                    Positioned(
+                        bottom: 20,
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(bird.commonName!,
+                                  style: const TextStyle(
                                       color: Colors.white,
-                                      borderRadius: BorderRadius.circular(6)),
-                                ),
-                                const SizedBox(width: 10),
-                                const Text("Family Bird",
-                                    style: TextStyle(color: Colors.white)),
-                              ],
-                            )
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: AppSize.f2)),
+                              Row(
+                                children: [
+                                  const Text("Order Bird",
+                                      style: TextStyle(color: Colors.white)),
+                                  const SizedBox(width: 10),
+                                  Container(
+                                    width: 6,
+                                    height: 6,
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(6)),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  const Text("Family Bird",
+                                      style: TextStyle(color: Colors.white)),
+                                ],
+                              )
+                            ],
+                          ),
+                        ))
+                  ],
+                ),
+              ),
+              BirdOverView(bird: bird),
+              BirdDescription(bird: bird),
+              Card(
+                color: Colors.white,
+                margin: const EdgeInsets.all(12),
+                child: Container(
+                    width: widthP(context),
+                    margin: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Row(
+                          children: [
+                            Text("Status",
+                                style: TextStyle(
+                                    fontSize: AppSize.f4,
+                                    fontWeight: FontWeight.w600)),
+                            SizedBox(width: 15),
+                            Icon(Iconsax.watch_status)
                           ],
                         ),
-                      ))
-                ],
-              ),
-            ),
-            Container(
-                width: widthP(context),
-                margin: const EdgeInsets.all(10),
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                    color: Colors.black12,
-                    borderRadius: BorderRadius.circular(10)),
-                child: const Row(
-                  children: [
-                    Text("Vietnamese Name : ",
-                        style: TextStyle(color: AppColors.blackGrey)),
-                    Text(
-                      "Chim chao mao",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: AppSize.f5),
-                    )
-                  ],
-                )),
-          ],
+                        const SizedBox(height: 10),
+                        RichText(
+                          overflow: TextOverflow.clip,
+                          text: TextSpan(children: [
+                            const TextSpan(
+                                text: "Status : ",
+                                style: TextStyle(color: AppColors.blackGrey)),
+                            TextSpan(
+                                text: bird.conservationStatus ?? "Unknow",
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: AppSize.f5,
+                                    color: AppColors.blackColor)),
+                          ]),
+                        ),
+                      ],
+                    )),
+              )
+            ],
+          ),
         )));
   }
 }

@@ -33,11 +33,10 @@ class ExploreScreen extends StatelessWidget {
         ],
       ),
       body: Consumer<ExploreProvider>(builder: (context, exploreState, _) {
-        // return BirdList(
-        //   birds: exploreState.birds,
-        //   refreshPage: exploreState.getBird(1),
-        // );
-        return Container();
+        return BirdList(
+          birds: exploreState.birds,
+          refreshPage: exploreState.getBird(1),
+        );
       }),
     );
   }

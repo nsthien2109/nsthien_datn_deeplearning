@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:njha_bird_detect/app/screens/auth/auth.provider.dart';
 import 'package:njha_bird_detect/app/shared/utils/theme.dart';
+import 'package:njha_bird_detect/app/shared/utils/validation.dart';
 import 'package:njha_bird_detect/app/shared/widgets/button.dart';
 import 'package:njha_bird_detect/app/shared/widgets/text_input.dart';
+import 'package:provider/provider.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
@@ -43,33 +46,53 @@ class RegisterScreen extends StatelessWidget {
                       margin: const EdgeInsets.all(25),
                       child: Column(
                         children: [
-                          Form(
-                              child: Column(
-                            children: [
-                              TextInput(
-                                  hintText: "Email", iconSuffix: Iconsax.user),
-                              const SizedBox(height: 25),
-                              TextInput(
-                                  hintText: "Username",
-                                  iconSuffix: Iconsax.user_octagon4),
-                              const SizedBox(height: 25),
-                              TextInput(
-                                hintText: "Password",
-                                iconSuffix: Iconsax.password_check,
-                              ),
-                              const SizedBox(height: 25),
-                              const Button(),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Text("Already have an account?"),
-                                  TextButton(
-                                      onPressed: () => Navigator.pop(context),
-                                      child: const Text("Sign in"))
-                                ],
-                              ),
-                            ],
-                          )),
+                          Consumer<AuthProvider>(
+                              builder: (context, authState, _) {
+                            return Form(
+                                key: authState.formKeySignUp,
+                                child: Column(
+                                  children: [
+                                    TextInput(
+                                        hintText: "Email",
+                                        iconSuffix: Iconsax.user,
+                                        controller: authState.emailController,
+                                        validate: (value) =>
+                                            emailValidate(value)),
+                                    const SizedBox(height: 25),
+                                    TextInput(
+                                      hintText: "Username",
+                                      iconSuffix: Iconsax.user_octagon4,
+                                      controller: authState.usernameController,
+                                      validate: (value) =>
+                                          textBoxValidate(value),
+                                    ),
+                                    const SizedBox(height: 25),
+                                    TextInput(
+                                      hintText: "Password",
+                                      iconSuffix: Iconsax.password_check,
+                                      controller: authState.passwordController,
+                                      validate: (value) =>
+                                          passwordValidate(value),
+                                    ),
+                                    const SizedBox(height: 25),
+                                    Button(
+                                        title: "Sign Up",
+                                        onTap: () =>
+                                            authState.register(context)),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Text("Already have an account?"),
+                                        TextButton(
+                                            onPressed: () =>
+                                                Navigator.pop(context),
+                                            child: const Text("Sign in"))
+                                      ],
+                                    ),
+                                  ],
+                                ));
+                          }),
                         ],
                       ),
                     ))),

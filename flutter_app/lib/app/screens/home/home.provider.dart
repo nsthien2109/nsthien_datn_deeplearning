@@ -19,7 +19,7 @@ class HomeProvider extends ChangeNotifier {
   late Timer timer;
 
   HomeProvider() {
-    // getBirdHome();
+    getBirdHome();
   }
 
   // get home data

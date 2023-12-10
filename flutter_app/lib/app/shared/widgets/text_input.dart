@@ -4,11 +4,20 @@ import 'package:njha_bird_detect/app/shared/utils/theme.dart';
 class TextInput extends StatelessWidget {
   String hintText;
   IconData iconSuffix;
-  TextInput({super.key, required this.hintText, required this.iconSuffix});
+  TextEditingController? controller;
+  Function(String value) validate;
+  TextInput(
+      {super.key,
+      required this.hintText,
+      required this.iconSuffix,
+      this.controller,
+      required this.validate});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
+      validator: (value) => validate(value!),
       decoration: InputDecoration(
           hintText: hintText,
           filled: true,

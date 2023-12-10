@@ -42,4 +42,24 @@ class UserData {
     data['id'] = id;
     return data;
   }
+
+  // Convert the User object to a Map
+  Map<String, dynamic> toMap() {
+    return {
+      'email': email,
+      'username': username,
+      'createdAt': createdAt,
+      'id': id
+    };
+  }
+
+  // Create a User object from a Map
+  factory UserData.fromMap(Map<String, dynamic> map) {
+    return UserData(
+      username: map['username'],
+      email: map['email'],
+      createdAt: map['createdAt'],
+      id: map['id'],
+    );
+  }
 }

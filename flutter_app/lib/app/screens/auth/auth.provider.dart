@@ -1,11 +1,17 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:njha_bird_detect/app/models/auth.dart';
 import 'package:njha_bird_detect/app/shared/services/auth_services.dart';
 import 'package:njha_bird_detect/app/shared/utils/storage.dart';
+import 'package:njha_bird_detect/app/shared/widgets/toast.dart';
 
 class AuthProvider extends ChangeNotifier {
   Auth? _auth = Auth();
   Auth? get auth => _auth;
+
+  final _formKeySignIn = GlobalKey<FormState>();
+  GlobalKey<FormState> get formKeySignIn => _formKeySignIn;
 
   final _formKeySignUp = GlobalKey<FormState>();
   GlobalKey<FormState> get formKeySignUp => _formKeySignUp;
@@ -19,11 +25,29 @@ class AuthProvider extends ChangeNotifier {
   final TextEditingController _passwordController = TextEditingController();
   TextEditingController get passwordController => _passwordController;
 
+  AuthProvider() {
+    checkAuth();
+  }
+
+  checkAuth() async {
+    final accessToken = await getLocalStorage('accessToken');
+    final accountData = await getLocalStorage('account');
+    if (accountData != null && accessToken != null) {
+      var user = jsonDecode(accountData);
+      var userData = UserData(
+          id: user['id'],
+          username: user['username'],
+          email: user['email'],
+          createdAt: user['createdAt']);
+      _auth = Auth(accessToken: accessToken, userData: userData);
+    }
+  }
+
   /* Register Function */
   Future<void> register(context) async {
     if (_formKeySignUp.currentState!.validate()) {
       try {
-        final newAccount = <String, dynamic>{
+        final newAccount = {
           "email": _emailController.text,
           "username": _usernameController.text,
           "password": _passwordController.text,
@@ -33,15 +57,57 @@ class AuthProvider extends ChangeNotifier {
         _auth = accountData;
         if (accountData?.accessToken != null &&
             accountData?.userData?.id != null) {
-          await setLocalStorage('account', _auth?.userData);
-
+          await setLocalStorage(
+              'account', json.encode(_auth?.userData?.toMap()));
           await setLocalStorage('accessToken', _auth?.accessToken);
         }
+        showToast(context, "Register Successfully");
+        Navigator.pop(context);
+        clearInput();
         notifyListeners();
       } catch (e) {
-        notifyListeners();
+        showToast(context, e.toString());
         debugPrint("Error in register provider:  $e");
       }
     }
+  }
+
+  Future<void> login(context) async {
+    try {
+      if (_formKeySignIn.currentState!.validate()) {
+        final loginInfo = {
+          "email": _emailController.text,
+          "password": _passwordController.text
+        };
+        final Auth? accountData = await loginAccount(loginInfo);
+        _auth = accountData;
+        if (_auth?.accessToken != null) {
+          await setLocalStorage(
+              'account', json.encode(_auth?.userData?.toMap()));
+          await setLocalStorage('accessToken', _auth?.accessToken);
+          showToast(context, "Login Successfully");
+          Navigator.pop(context);
+          clearInput();
+        }
+        notifyListeners();
+      }
+    } catch (e) {
+      showToast(context, e.toString());
+      debugPrint("Error in login provider $e");
+    }
+  }
+
+  clearInput() {
+    _emailController.clear();
+    _usernameController.clear();
+    _passwordController.clear();
+    notifyListeners();
+  }
+
+  logout() async {
+    await removeLocalStorage('accessToken');
+    await removeLocalStorage('account');
+    _auth = Auth();
+    notifyListeners();
   }
 }

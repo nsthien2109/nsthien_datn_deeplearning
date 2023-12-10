@@ -1,6 +1,7 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:njha_bird_detect/app/screens/auth/auth.provider.dart';
 import 'package:njha_bird_detect/app/screens/explore/explore.provider.dart';
 import 'package:njha_bird_detect/app/screens/home/home.provider.dart';
 import 'package:njha_bird_detect/app/screens/layout.provider.dart';
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
+          ChangeNotifierProvider(create: (_) => AuthProvider()),
           ChangeNotifierProvider(create: (_) => LayoutProvider()),
           ChangeNotifierProvider(create: (_) => HomeProvider()),
           ChangeNotifierProvider(create: (_) => ExploreProvider()),
