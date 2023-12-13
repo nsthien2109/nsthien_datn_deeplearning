@@ -83,6 +83,8 @@ export class PredictionService {
         return top5Birds;
       })
       .catch((err) => {
+        console.log("Check : ", err);
+
         return err;
       });
   }

@@ -6,13 +6,12 @@ import 'package:provider/provider.dart';
 
 class BirdList extends StatelessWidget {
   List<Bird?> birds;
-  Future refreshPage;
-  BirdList({super.key, required this.birds, required this.refreshPage});
+  BirdList({super.key, required this.birds});
 
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-        onRefresh: () async => await refreshPage,
+        onRefresh: () => context.read<ExploreProvider>().getBird(1),
         child: CustomScrollView(
           controller: context.watch<ExploreProvider>().scrollController,
           slivers: [

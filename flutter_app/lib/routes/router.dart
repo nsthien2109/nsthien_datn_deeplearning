@@ -5,6 +5,7 @@ import 'package:njha_bird_detect/app/screens/detail/detail_screen.dart';
 import 'package:njha_bird_detect/app/screens/home/home.dart';
 import 'package:njha_bird_detect/app/screens/intro/intro_screen.dart';
 import 'package:njha_bird_detect/app/screens/layout.dart';
+import 'package:njha_bird_detect/app/screens/prediction/result_screen.dart';
 
 class AppRouter {
   static const String introRoute = '/intro';
@@ -14,6 +15,7 @@ class AppRouter {
   static const String favoriteRoute = '/favorite';
   static const String cartRouter = '/cart';
   static const String detailRouter = '/detail';
+  static const String resultRouter = '/result';
   static const String createStoreRouter = '/create-store';
   static const String editStoreRouter = '/edit-store';
 
@@ -41,6 +43,12 @@ class AppRouter {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => const DetailScreen(),
+        );
+
+      case resultRouter:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => const PredictResult(),
         );
 
       case mainRoute:

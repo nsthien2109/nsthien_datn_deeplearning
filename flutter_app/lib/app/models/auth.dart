@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:njha_bird_detect/app/models/history.dart';
+
 class Auth {
   String? accessToken;
   UserData? userData;
@@ -24,14 +28,22 @@ class UserData {
   String? username;
   String? createdAt;
   int? id;
+  List<History>? histories;
 
-  UserData({this.email, this.username, this.createdAt, this.id});
+  UserData(
+      {this.email, this.username, this.createdAt, this.id, this.histories});
 
   UserData.fromJson(Map<String, dynamic> json) {
     email = json['email'];
     username = json['username'];
     createdAt = json['createdAt'];
     id = json['id'];
+    if (json['histories'] != null) {
+      histories = <History>[];
+      json['histories'].forEach((v) {
+        histories?.add(History.fromJson(jsonDecode(v)));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -40,6 +52,9 @@ class UserData {
     data['username'] = username;
     data['createdAt'] = createdAt;
     data['id'] = id;
+    if (histories != null) {
+      data['histories'] = histories!.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 

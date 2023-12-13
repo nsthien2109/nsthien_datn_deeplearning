@@ -63,7 +63,7 @@ class ProfileScreen extends StatelessWidget {
               child: Column(
                 children: [
                   SettingItem(title: "Edit Profile", onTap: () {}),
-                  SettingItem(title: "Logout", onTap: () => authState.logout())
+                  SettingItem(title: "Logout", onTap: () => authState.logout()),
                 ],
               ),
             )

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:njha_bird_detect/app/models/history.dart';
 import 'package:njha_bird_detect/app/shared/utils/cache_image.dart';
 import 'package:njha_bird_detect/app/shared/utils/theme.dart';
 
 class HistoryItem extends StatelessWidget {
-  const HistoryItem({super.key});
+  History history;
+  HistoryItem({super.key, required this.history});
 
   @override
   Widget build(BuildContext context) {

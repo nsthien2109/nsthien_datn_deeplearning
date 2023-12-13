@@ -16,7 +16,7 @@ class ExploreScreen extends StatelessWidget {
         ),
         elevation: 0,
         title: const Text(
-          'Explore Birds',
+          'Discover Birds',
           style: TextStyle(fontSize: 18, color: Colors.black),
         ),
         backgroundColor: Colors.white,
@@ -33,10 +33,7 @@ class ExploreScreen extends StatelessWidget {
         ],
       ),
       body: Consumer<ExploreProvider>(builder: (context, exploreState, _) {
-        return BirdList(
-          birds: exploreState.birds,
-          refreshPage: exploreState.getBird(1),
-        );
+        return BirdList(birds: exploreState.data?.results ?? []);
       }),
     );
   }

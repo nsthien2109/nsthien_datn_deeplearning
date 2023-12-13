@@ -2,7 +2,7 @@ import 'package:njha_bird_detect/app/models/bird.dart';
 import 'package:njha_bird_detect/app/shared/services/api_config.dart';
 import 'package:njha_bird_detect/app/shared/services/api_service.dart';
 
-Future<List<Bird?>> getBirds(int page) async {
+Future<BirdResponse> getBirds(int page) async {
   final response = await ApiService.get(
       ApiConfig.ENDPOINT['birds']!['index']! + '?page=${page}');
 
@@ -25,5 +25,10 @@ Future<List<Bird?>> getBirds(int page) async {
         className: element['class_name'],
         images: images));
   }
-  return birds;
+  return BirdResponse(
+      results: birds,
+      page: response['page'],
+      pageSize: response['pageSize'],
+      total: response['total'],
+      totalPages: response['totalPages']);
 }

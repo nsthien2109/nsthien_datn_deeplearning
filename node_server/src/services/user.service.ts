@@ -57,13 +57,30 @@ export class UserService {
   }
 
   async findById(id: number) {
-    return await this.userRepository.findOne({ where: { id } });
+    return await this.userRepository.findOne({
+      where: { id },
+      relations: {
+        role: true,
+        histories: {
+          predictions: {
+            bird: true,
+          },
+        },
+      },
+    });
   }
 
   async findByEmail(email: string) {
     return await this.userRepository.findOne({
       where: { email },
-      relations: { role: true },
+      relations: {
+        role: true,
+        histories: {
+          predictions: {
+            bird: true,
+          },
+        },
+      },
     });
   }
 
@@ -72,7 +89,16 @@ export class UserService {
   }
 
   async findByEmailAndPassword(email: string, password: string) {
-    return await this.userRepository.findOne({ where: { email, password } });
+    return await this.userRepository.findOne({
+      where: { email, password },
+      relations: {
+        histories: {
+          predictions: {
+            bird: true,
+          },
+        },
+      },
+    });
   }
 
   async save(data: User) {

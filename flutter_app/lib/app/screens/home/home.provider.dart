@@ -13,8 +13,8 @@ class HomeProvider extends ChangeNotifier {
   int _pageIndex = 0;
   int get pageIndex => _pageIndex;
 
-  List<Bird?> _birds = [];
-  List<Bird?> get birds => _birds;
+  BirdResponse? _data = BirdResponse();
+  BirdResponse? get data => _data;
 
   late Timer timer;
 
@@ -27,7 +27,7 @@ class HomeProvider extends ChangeNotifier {
     try {
       final random = Random();
       var birdData = await getBirds(1 + random.nextInt(50));
-      _birds = birdData;
+      _data = birdData;
       notifyListeners();
     } catch (e) {
       debugPrint('${e}');

@@ -28,7 +28,9 @@ class BirdItem extends StatelessWidget {
                 child: cacheImageNetwork(
                     width: boxImageSize,
                     height: boxImageSize,
-                    url: bird.images![0]),
+                    url: bird.images!.isNotEmpty
+                        ? bird.images![0]
+                        : 'https://jmva.or.jp/wp-content/uploads/2018/07/noimage.png'),
               ),
               Container(
                 alignment: AlignmentDirectional.centerStart,

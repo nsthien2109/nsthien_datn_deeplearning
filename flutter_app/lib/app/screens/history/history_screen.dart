@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:njha_bird_detect/app/screens/auth/auth.provider.dart';
 import 'package:njha_bird_detect/app/screens/history/widgets/history_list.dart';
-import 'package:njha_bird_detect/app/shared/utils/theme.dart';
+import 'package:provider/provider.dart';
 
 class HistoryScreen extends StatelessWidget {
   const HistoryScreen({super.key});
@@ -25,7 +26,10 @@ class HistoryScreen extends StatelessWidget {
               height: 1.0,
             )),
       ),
-      body: const HistoryList(),
+      body: Consumer<AuthProvider>(builder: (context, authState, _) {
+        return HistoryList(
+            histories: authState.auth?.userData?.histories ?? []);
+      }),
     );
   }
 }

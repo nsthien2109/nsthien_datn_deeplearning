@@ -3,32 +3,35 @@ import 'package:njha_bird_detect/app/models/bird.dart';
 import 'package:njha_bird_detect/app/shared/services/bird_services.dart';
 
 class ExploreProvider extends ChangeNotifier {
-  List<Bird?> _birds = [];
-  List<Bird?> get birds => _birds;
-
+  BirdResponse? _data = BirdResponse();
+  BirdResponse? get data => _data;
   final ScrollController _scrollController = ScrollController();
   ScrollController get scrollController => _scrollController;
 
-  final int _currentPage = 1;
-  int get currentPage => _currentPage;
-
   ExploreProvider() {
+    getBird(1);
     _scrollController.addListener(() async {
       // Check if the user has reached the end of the list
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
         // Load more data when reaching the bottom
-        await getBird(_currentPage);
+        await getBird(_data?.page != null ? (_data!.page! + 1) : 1);
       }
     });
+    notifyListeners();
   }
   // get home data
-  Future<void> getBird(int page) async {
-    print(page);
+  Future<void> getBird(page) async {
     try {
-      var birdData = await getBirds(page);
-      _birds = page > 1 ? [...birds, ...birdData] : birdData;
-      _currentPage + 1;
+      var birdData = await getBirds(page ?? 1);
+      _data = page == 1
+          ? birdData
+          : BirdResponse(
+              page: birdData.page,
+              pageSize: birdData.pageSize,
+              total: birdData.total,
+              totalPages: birdData.totalPages,
+              results: [...?_data?.results, ...?birdData.results]);
       notifyListeners();
     } catch (e) {
       rethrow;

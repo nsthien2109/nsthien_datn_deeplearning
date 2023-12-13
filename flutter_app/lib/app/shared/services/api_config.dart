@@ -1,5 +1,6 @@
 class ApiConfig {
-  static const String BASE_URL = "http://localhost:8080/api";
+  static const String BASE_URL =
+      "https://76ca-2001-ee0-4b43-dc10-99c6-3b61-60f4-26fe.ngrok-free.app/api";
 
   static const Map<String, String> RESOURCES = {
     'auth': 'auth',
