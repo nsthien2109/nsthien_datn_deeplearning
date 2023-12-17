@@ -37,13 +37,20 @@ def predict():
     if model is None:
         load_custom_model()
 
+    file = request.files['file']
     data = request.get_json()
     url = data["url"]
     try:
-        image = prepare_image(url)
+        if url:
+            image = prepare_image(url)
+        else :
+            image = Image.open(file)
+
+            image = image.resize((224, 224))
+            image = np.expand_dims(image, axis=0)
+            image = image / 255.0
+
         prediction = model.predict(image)
-        predicted_class = np.argmax(prediction, axis=1)
-        confidence = round(100 * prediction[0][predicted_class[0]], 2)
 
         # Get the indices of the top 5 predictions
         top_indices = np.argsort(prediction[0])[::-1][:5]
@@ -57,12 +64,6 @@ def predict():
                     for idx in top_indices
                 ]
 
-
-#         response = {
-#             "predicted_id": int(predicted_class[0] + 1),
-#             "confidence": confidence,
-#             "class_name": bird_classes[predicted_class[0]],
-#         }
         return jsonify(top_predictions)
     except Exception as e:
         return jsonify(error=str(e))
