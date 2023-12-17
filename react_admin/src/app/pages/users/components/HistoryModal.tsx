@@ -84,7 +84,7 @@ const HistoryModal: React.FC<HistoryModalProps> = ({ open, onCancel }) => {
 
   const historyData: DataType[] =
     user &&
-    user.histories.map((item) => {
+    user.histories?.map((item) => {
       return {
         key: item.id,
         url: item.url || 'Unknow',

@@ -16,7 +16,7 @@ interface DataType {
   key: string;
   username: string;
   email: string;
-  isActive: number;
+  isActive: string;
   role: number;
   onView: () => void;
   onDelete: () => void;
@@ -62,18 +62,22 @@ const UserList: React.FC = () => {
       title: 'Active',
       dataIndex: 'isActive',
       key: 'isActive',
-      render: (_, record) => (
-        <Tag color={record.isActive === 1 ? 'green' : 'orange-inverse'} key={record.key}>
-          {record.isActive ? 'Active' : 'Blocked'}
-        </Tag>
-      ),
+      render: (_, record) => {
+        console.log(record.isActive);
+
+        return (
+          <Tag color={record.isActive ? 'green' : 'orange-inverse'} key={record.key}>
+            {record.isActive ? 'Active' : 'Blocked'}
+          </Tag>
+        );
+      },
     },
     {
       title: 'Role',
       key: 'role',
       dataIndex: 'role',
       render: (_, record) => (
-        <Tag color={record.role === 1 ? 'warning' : 'green'} key={record.key}>
+        <Tag color={record.role === 1 ? 'warning' : 'pink'} key={record.key}>
           {record.role === 1 ? 'Admin' : 'User'}
         </Tag>
       ),
@@ -97,12 +101,12 @@ const UserList: React.FC = () => {
     },
   ];
 
-  const userData: DataType[] = users.map((item) => {
+  const userData: DataType[] = users?.map((item) => {
     return {
       key: `${item.id}`,
       username: item.username,
       email: item.email,
-      isActive: parseInt(item.isActive),
+      isActive: item.isActive,
       role: item.role.id,
       onView: () => {
         dispatch(getUserData(item) as any);
