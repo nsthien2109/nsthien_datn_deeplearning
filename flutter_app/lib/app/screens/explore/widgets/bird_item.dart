@@ -20,6 +20,7 @@ class BirdItem extends StatelessWidget {
           behavior: HitTestBehavior.translucent,
           onTap: () => Navigator.pushNamed(context, '/detail', arguments: bird),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ClipRRect(
                 borderRadius: const BorderRadius.only(
@@ -45,22 +46,26 @@ class BirdItem extends StatelessWidget {
               ),
               Container(
                 margin: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Allooo",
-                        style: TextStyle(
-                            fontSize: 13, fontWeight: FontWeight.bold)),
-                    Text('Haha', style: TextStyle(fontSize: 11))
-                  ],
-                ),
+                child: Text(bird.className ?? 'NOT FOUND',
+                    style: const TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                        overflow: TextOverflow.ellipsis)),
               ),
               Container(
-                margin: const EdgeInsets.only(top: 5),
-                child: const Row(
+                margin: const EdgeInsets.symmetric(horizontal: 5),
+                child: Row(
                   children: [
-                    Icon(Iconsax.location, size: 12),
-                    Text('Nam My', style: TextStyle(fontSize: 11))
+                    const Icon(Iconsax.location, size: 12),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Text(bird.vietnameseName ?? 'Unknow',
+                          style: const TextStyle(
+                              fontSize: 11, overflow: TextOverflow.ellipsis)),
+                    )
                   ],
                 ),
               )

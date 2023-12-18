@@ -41,7 +41,7 @@ class UserData {
     if (json['histories'] != null) {
       histories = <History>[];
       json['histories'].forEach((v) {
-        histories?.add(History.fromJson(jsonDecode(v)));
+        histories?.add(History.fromJson(v));
       });
     }
   }
@@ -64,17 +64,18 @@ class UserData {
       'email': email,
       'username': username,
       'createdAt': createdAt,
-      'id': id
+      'id': id,
+      'histories': histories
     };
   }
 
   // Create a User object from a Map
   factory UserData.fromMap(Map<String, dynamic> map) {
     return UserData(
-      username: map['username'],
-      email: map['email'],
-      createdAt: map['createdAt'],
-      id: map['id'],
-    );
+        username: map['username'],
+        email: map['email'],
+        createdAt: map['createdAt'],
+        id: map['id'],
+        histories: map['histories']);
   }
 }

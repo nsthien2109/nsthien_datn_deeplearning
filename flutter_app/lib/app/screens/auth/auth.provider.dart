@@ -34,11 +34,7 @@ class AuthProvider extends ChangeNotifier {
     final accountData = await getLocalStorage('account');
     if (accountData != null && accessToken != null) {
       var user = jsonDecode(accountData);
-      var userData = UserData(
-          id: user['id'],
-          username: user['username'],
-          email: user['email'],
-          createdAt: user['createdAt']);
+      var userData = UserData.fromJson(user);
       _auth = Auth(accessToken: accessToken, userData: userData);
     }
   }

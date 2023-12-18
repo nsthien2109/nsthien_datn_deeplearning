@@ -36,10 +36,8 @@ Future<Auth?> loginAccount(loginData) async {
     final response =
         await ApiService.post(ApiConfig.ENDPOINT['auth']!['login']!, loginData);
 
-    final accessToken = response['accessToken'];
-    final userData = response['data'];
-
-    return Auth.fromJson(response);
+    Auth auth = Auth.fromJson(response);
+    return auth;
   } catch (e) {
     rethrow;
   }

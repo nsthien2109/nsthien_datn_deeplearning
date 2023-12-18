@@ -17,7 +17,7 @@ class History {
     if (json['predictions'] != null) {
       predictions = <Predictions>[];
       json['predictions'].forEach((v) {
-        predictions?.add(Predictions.fromJson(jsonDecode(v)));
+        predictions?.add(Predictions.fromJson(v));
       });
     }
   }

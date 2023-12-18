@@ -41,7 +41,7 @@ class Bird {
     conservationStatus = json['conservation_status'];
     confidence = json['confidence'];
     className = json['class_name'];
-    images = json['images'].cast<String>();
+    images = json['images'] != null ? json['images'].cast<String>() : [];
   }
 
   Map<String, dynamic> toJson() {

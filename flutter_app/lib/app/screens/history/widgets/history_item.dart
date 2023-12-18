@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:intl/intl.dart';
 import 'package:njha_bird_detect/app/models/history.dart';
 import 'package:njha_bird_detect/app/shared/utils/cache_image.dart';
 import 'package:njha_bird_detect/app/shared/utils/theme.dart';
@@ -10,6 +11,8 @@ class HistoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dateTime = DateTime.parse(history.date ?? '2023-01-01 12:00:00');
+
     return Card(
       margin: const EdgeInsets.only(top: 16),
       shape: RoundedRectangleBorder(
@@ -26,11 +29,11 @@ class HistoryItem extends StatelessWidget {
               children: [
                 cacheImageNetwork(
                     height: 70,
-                    url:
-                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_I9EGuo-MBIq1puHCWjmqJP9qqs1a0WEyKA&usqp=CAU",
+                    width: 70,
+                    url: history.url,
                     plColor: Colors.transparent),
                 const SizedBox(width: 16),
-                const Expanded(
+                Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -39,26 +42,31 @@ class HistoryItem extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Flexible(
-                            child: Text("Chim vang anh",
-                                style: TextStyle(
+                            child: Text(
+                                history.predictions!.isNotEmpty
+                                    ? history.predictions![0].bird!.commonName!
+                                    : "Unknow",
+                                style: const TextStyle(
                                     fontSize: 13, fontWeight: FontWeight.bold),
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis),
                           ),
-                          Text("2023-11-22",
-                              style: TextStyle(
+                          Text(DateFormat.yMd().format(dateTime),
+                              style: const TextStyle(
                                   fontSize: 11, color: AppColors.blackGrey)),
                         ],
                       ),
-                      SizedBox(height: 8),
-                      Text("Confidence : 50%",
-                          style: TextStyle(
+                      const SizedBox(height: 8),
+                      Text(
+                          "Confidence : ${history.predictions!.isNotEmpty ? history.predictions![0].confidence : 0}%",
+                          style: const TextStyle(
                               fontSize: 12, color: AppColors.blackGrey))
                     ],
                   ),
                 ),
                 const SizedBox(width: 15),
-                IconButton(onPressed: () {}, icon: Icon(Iconsax.minus_cirlce))
+                IconButton(
+                    onPressed: () {}, icon: const Icon(Iconsax.minus_cirlce))
               ],
             )),
       ),
