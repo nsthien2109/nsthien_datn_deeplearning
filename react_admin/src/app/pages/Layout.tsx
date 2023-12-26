@@ -11,7 +11,9 @@ import { Layout, Menu, Button, theme, Divider } from 'antd';
 
 import logo from '../../assets/svgs/logo.svg';
 import userAccount from '../../assets/svgs/user-account.svg';
-import { Link, Outlet, useLocation } from 'react-router-dom';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
 
 const { Header, Sider, Content } = Layout;
 
@@ -19,7 +21,10 @@ const LayoutApp = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(false);
 
+  const auth = useSelector((state: RootState) => state.auth.userInfo);
+
   let location = useLocation();
+  const navigate = useNavigate();
 
   const [current, setCurrent] = useState(location.pathname);
 
@@ -33,6 +38,10 @@ const LayoutApp = () => {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+
+  useEffect(() => {
+    if (!auth.id) navigate('/auth/login');
+  }, [auth, navigate]);
 
   return (
     <Layout className="min-h-screen layout" onClick={() => setOpenDropdown(false)}>

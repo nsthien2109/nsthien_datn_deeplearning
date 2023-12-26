@@ -27,7 +27,7 @@ const BirdDetail = () => {
   return (
     <div className="bird-detail">
       <div className="bird-detail-wrapper">
-        <div className="flex">
+        <div className="flex flex-column lg:flex-row gap-5">
           <div className="flex-1 bird-carousel">
             <BirdCarousel images={birdDetail.images} />
           </div>

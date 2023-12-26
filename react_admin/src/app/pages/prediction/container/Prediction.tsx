@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Breadcrumb, Button, Spin } from 'antd';
 import { FileSearchOutlined, LoadingOutlined } from '@ant-design/icons';
@@ -10,18 +10,27 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
 import { predictionBirdAction } from '../prediction.actions';
 import HistoryModal from '../components/HistoryModal';
+import { Prediction as PredictionModel } from '../../../models/prediction';
 
 const Prediction = () => {
   const [photoPreview, setPhotoPreview] = useState<string>();
   const [openHistoryModal, setOpenHistoryModal] = useState(false);
   const { predictions, isLoading, isSuccess, isError } = useSelector((state: RootState) => state.prediction);
+  const [resultSelected, setResultSelected] = useState<any>(predictions[0]);
 
   const dispatch = useDispatch();
 
   const handlePrediction = (file: File) => {
-    console.log(file);
     dispatch(predictionBirdAction(file) as any);
   };
+
+  const handleResultSelected = (predict: PredictionModel) => {
+    setResultSelected(predict);
+  };
+
+  useEffect(() => {
+    setResultSelected(undefined);
+  }, [predictions]);
 
   return (
     <>
@@ -46,8 +55,8 @@ const Prediction = () => {
             History
           </Button>
         </div>
-        <div className="flex gap-5 prediction-wrapper">
-          <div className="prediction-input w-[500px]">
+        <div className="flex flex-col lg:flex-row gap-5 prediction-wrapper">
+          <div className="prediction-input w-full lg:w-[500px]">
             <h3 className="mt-3 mb-1 font-medium">Image Input</h3>
             <InputImage
               photoPreview={photoPreview}
@@ -60,9 +69,9 @@ const Prediction = () => {
           {predictions.length > 0 && !isLoading && (
             <div className="flex-1 prediction-output">
               <h3 className="mt-3 mb-1 font-medium">Output Birds</h3>
-              <OutputList predictions={predictions} />
+              <OutputList predictions={predictions} onClick={handleResultSelected} />
               <h3 className="mt-3 mb-1 font-medium">Best Prediction</h3>
-              <BestPrediction bird={predictions[0]} />
+              <BestPrediction bird={resultSelected ?? predictions[0]} />
             </div>
           )}
           {isLoading && <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />}

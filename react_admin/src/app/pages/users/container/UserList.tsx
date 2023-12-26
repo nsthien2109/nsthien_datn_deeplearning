@@ -90,10 +90,10 @@ const UserList: React.FC = () => {
           <Button onClick={record.onView} className="bg-blue-300">
             View History
           </Button>
-          <Button onClick={record.onEdit} className="bg-blue-300">
+          <Button onClick={record.onEdit} className="bg-blue-300 hidden lg:block">
             Edit
           </Button>
-          <Button onClick={record.onDelete} className="bg-red-500">
+          <Button onClick={record.onDelete} className="bg-red-500 hidden lg:block">
             Delete
           </Button>
         </Space>

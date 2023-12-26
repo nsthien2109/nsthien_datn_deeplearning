@@ -2,6 +2,7 @@ import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 
 import { getLocalStorage } from '../utils';
 import { StorageKey } from '../constants';
+import { removeLocalStorage } from '../utils/storage';
 
 export class ApiService {
   axiosInstance: AxiosInstance;
@@ -48,6 +49,13 @@ export class ApiService {
         throw new Error(`${errors[0]}`);
       }
       if (error.response.status === 401) {
+        removeLocalStorage(StorageKey.ACCOUNT);
+        removeLocalStorage(StorageKey.ACCESS_TOKEN);
+        throw new Error(`Please login to do this action !`);
+      }
+      if (error.response.status === 403) {
+        removeLocalStorage(StorageKey.ACCOUNT);
+        removeLocalStorage(StorageKey.ACCESS_TOKEN);
         throw new Error(`Please login to do this action !`);
       }
       console.error('Server Error :', error.response.status, error.response.data);

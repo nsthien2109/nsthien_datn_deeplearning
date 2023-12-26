@@ -62,9 +62,9 @@ const HistoryModal: React.FC<HistoryModalProps> = ({ open, onCancel }) => {
       key: 'predictions',
       render: (_, record) => (
         <div className="">
-          <h4 className="font-semibold text-lg">{record.predictions[0].bird.common_name}</h4>
-          <p>Confidence : {record.predictions[0].confidence}%</p>
-          <p>Scient Name : {record.predictions[0].bird.scientific_name}</p>
+          <h4 className="font-semibold text-lg">{record.predictions[0]?.bird.common_name}</h4>
+          <p>Confidence : {record.predictions[0]?.confidence}%</p>
+          <p>Scient Name : {record.predictions[0]?.bird.scientific_name}</p>
         </div>
       ),
     },
@@ -74,7 +74,7 @@ const HistoryModal: React.FC<HistoryModalProps> = ({ open, onCancel }) => {
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-          <Button onClick={() => navigate(`/birds/${record.predictions[0].bird.id}`)} className="bg-blue-300">
+          <Button onClick={() => navigate(`/birds/${record.predictions[0]?.bird.id}`)} className="bg-blue-300">
             View Bird
           </Button>
           <Button
@@ -90,7 +90,7 @@ const HistoryModal: React.FC<HistoryModalProps> = ({ open, onCancel }) => {
     },
   ];
 
-  const historyData: DataType[] = history.map((item) => {
+  const historyData: DataType[] = history?.reverse().map((item) => {
     return {
       key: item.id,
       url: item.url || 'Unknow',

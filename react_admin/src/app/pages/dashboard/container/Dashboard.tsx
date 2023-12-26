@@ -20,7 +20,7 @@ const Dashboard: React.FC = () => {
   return <>
     <div className="dashboard">
       <div className="dashboard-wrapper">
-        <div className="grid grid-cols-3 gap-4 mb-10 dashboard-stats-grid">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-10 dashboard-stats-grid">
           <CardStatistic icon={accountIcon} title="Accounts" statistic={stats.users ?? 0} />
           <CardStatistic icon={birdIcon} title="Birds" statistic={stats.birds ?? 0} />
           <CardStatistic icon={aiIcon} title="Predictions" statistic={stats.histories ?? 0} />
