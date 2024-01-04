@@ -25,7 +25,7 @@ Future<List<Bird>> handlePrediction(File file) async {
           distribution: element['distribution'],
           diet: element['diet'],
           conservationStatus: element['conservation_status'],
-          confidence: element['confidence'],
+          confidence: double.parse(element['confidence'].toString()),
           className: element['class_name'],
           images: images));
     }
@@ -53,6 +53,7 @@ Future<dynamic> prediction(File imageFile) async {
 
   var responseStream = await request.send();
   var response = await http.Response.fromStream(responseStream);
+  print(response.body);
   if (response.statusCode == 200) {
     return jsonDecode(response.body);
   } else {

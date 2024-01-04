@@ -3,11 +3,12 @@ import 'dart:io';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:njha_bird_detect/app/models/bird.dart';
+import 'package:njha_bird_detect/app/shared/utils/cache_image.dart';
 import 'package:njha_bird_detect/app/shared/utils/theme.dart';
 
 class BestResult extends StatelessWidget {
   Bird bird;
-  File previewImage;
+  File? previewImage;
   BestResult({super.key, required this.bird, required this.previewImage});
 
   @override
@@ -35,11 +36,11 @@ class BestResult extends StatelessWidget {
                         width: MediaQuery.of(context).size.width,
                         margin: const EdgeInsets.symmetric(horizontal: 5.0),
                         decoration: BoxDecoration(
-                            color: Colors.amber,
                             borderRadius: BorderRadius.circular(10)),
                         child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: Image.network(i, fit: BoxFit.cover)));
+                          borderRadius: BorderRadius.circular(10),
+                          child: cacheImageNetwork(url: i),
+                        ));
                   },
                 );
               }).toList(),
@@ -57,10 +58,12 @@ class BestResult extends StatelessWidget {
                       color: Colors.teal.withOpacity(.4)),
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(5),
-                      child: Image.file(
-                        previewImage,
-                        fit: BoxFit.cover,
-                      )),
+                      child: previewImage != null
+                          ? Image.file(
+                              previewImage!,
+                              fit: BoxFit.cover,
+                            )
+                          : Image.asset('assets/images/error-img.png')),
                 ))
           ],
         ),
@@ -79,7 +82,7 @@ class BestResult extends StatelessWidget {
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
                   Text("${bird.confidence}%",
                       style: TextStyle(
-                          color: bird.confidence! > 50.0
+                          color: (bird.confidence ?? 0) > 50.0
                               ? Colors.green
                               : Colors.red,
                           fontSize: 18,

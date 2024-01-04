@@ -1,5 +1,5 @@
 class ApiConfig {
-  static const String BASE_URL = "http://localhost:8080/api";
+  static const String BASE_URL = "http://34.126.163.62/api";
 
   static const Map<String, String> RESOURCES = {
     'auth': 'auth',

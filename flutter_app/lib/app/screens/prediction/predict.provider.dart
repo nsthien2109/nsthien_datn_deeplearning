@@ -46,6 +46,13 @@ class PredictProvider extends ChangeNotifier {
     }
   }
 
+  void backToHome(context) {
+    Navigator.pop(context);
+    _isLoading = false;
+    _imageFile = null;
+    notifyListeners();
+  }
+
   @override
   void dispose() {
     _imageFile = null;

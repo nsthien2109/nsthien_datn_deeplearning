@@ -15,8 +15,9 @@ Future<Auth?> registerAccount(registerData) async {
 
     List<History> histories = [];
     final historiesData = userData['histories'] as List<dynamic>;
-    historiesData
-        .forEach((item) => histories.add(History.fromJson(jsonDecode(item))));
+    for (var item in historiesData) {
+      histories.add(History.fromJson(jsonDecode(item)));
+    }
 
     return Auth(
         accessToken: accessToken,
@@ -30,6 +31,8 @@ Future<Auth?> registerAccount(registerData) async {
     rethrow;
   }
 }
+
+Future<dynamic> deleteHistory() async {}
 
 Future<Auth?> loginAccount(loginData) async {
   try {

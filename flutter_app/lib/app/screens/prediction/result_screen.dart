@@ -22,11 +22,11 @@ class PredictResult extends StatelessWidget {
                         bird: predictState.result.isNotEmpty
                             ? predictState.result[0]
                             : Bird(),
-                        previewImage: predictState.imageFile!),
+                        previewImage: predictState.imageFile),
                     OtherResult(
                         birds: predictState.result.isNotEmpty
                             ? predictState.result
-                            : []),
+                            : [])
                   ],
                 );
         }),
@@ -38,6 +38,7 @@ class PredictResult extends StatelessWidget {
                 child: Button(
                     radius: 100,
                     title: "Back",
-                    onTap: () => Navigator.pop(context)))));
+                    onTap: () =>
+                        context.read<PredictProvider>().backToHome(context)))));
   }
 }

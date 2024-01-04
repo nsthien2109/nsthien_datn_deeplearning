@@ -6,12 +6,13 @@ import 'package:njha_bird_detect/app/shared/utils/theme.dart';
 
 class BirdItem extends StatelessWidget {
   Bird bird;
-  BirdItem({super.key, required this.bird});
+  double? confidence;
+  BirdItem({super.key, required this.bird, this.confidence});
 
   @override
   Widget build(BuildContext context) {
     final double boxImageSize = (widthP(context) - 24) / 2 - 12;
-    return Container(
+    return SizedBox(
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         elevation: 2,
@@ -46,7 +47,8 @@ class BirdItem extends StatelessWidget {
               ),
               Container(
                 margin: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-                child: Text(bird.className ?? 'NOT FOUND',
+                child: Text(
+                    "${confidence != null ? "Confidence : ${confidence}%" : bird.className}",
                     style: const TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,

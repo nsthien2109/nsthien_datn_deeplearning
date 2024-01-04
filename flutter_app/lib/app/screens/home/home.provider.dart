@@ -57,4 +57,10 @@ class HomeProvider extends ChangeNotifier {
     _pageIndex = index;
     notifyListeners();
   }
+
+  @override
+  void dispose() {
+    print("ABCBCC");
+    super.dispose();
+  }
 }
