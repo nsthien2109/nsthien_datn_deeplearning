@@ -19,7 +19,7 @@ class HomeCarousel extends StatelessWidget {
               Provider.of<HomeProvider>(context, listen: false)
                   .changePage(index);
             },
-            height: heightP(context) / 1.7),
+            height: heightP(context) / 1.9),
         items: data.map((bird) {
           return Stack(children: [
             GestureDetector(
@@ -40,14 +40,20 @@ class HomeCarousel extends StatelessWidget {
             ),
             Positioned(
                 top: sizePersen(context, 4),
-                right: sizePersen(context, 8),
-                child: Text(
-                  bird.commonName!.toUpperCase(),
-                  style: TextStyle(
-                      fontSize: sizeText(context, 10),
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white,
-                      decoration: TextDecoration.underline),
+                left: sizePersen(context, 8),
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Colors.black12,
+                    borderRadius: BorderRadius.circular(10)
+                  ),
+                  child: Text(
+                    bird.commonName!.toUpperCase(),
+                    style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white),
+                  ),
                 ))
           ]);
         }).toList(),

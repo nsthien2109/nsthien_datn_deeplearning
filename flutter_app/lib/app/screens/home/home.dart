@@ -12,14 +12,16 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Njha Bird"),
+      ),
         body: SafeArea(
             child: ListView(
       children: [
         Padding(
             padding: EdgeInsets.only(top: sizePersen(context, 4)),
             child: const HomeCarousel()),
-        Padding(
-          padding: EdgeInsets.only(top: sizePersen(context, 1)),
+        SizedBox(
           child: DotsIndicator(
             mainAxisAlignment: MainAxisAlignment.center,
             dotsCount: 10,
@@ -35,7 +37,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: EdgeInsets.all(sizePersen(context, 8)),
+          padding: EdgeInsets.only( left:sizePersen(context, 8), right: sizePersen(context, 8), top: 10),
           child: Center(
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -49,7 +51,7 @@ class HomeScreen extends StatelessWidget {
                       context: context,
                       builder: (BuildContext context) =>
                           const ChooseImageOptions()))),
-        )
+        ),
       ],
     )));
   }
