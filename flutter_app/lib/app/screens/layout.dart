@@ -33,12 +33,6 @@ class Layout extends StatelessWidget {
                 : const LoginRequiredPage(),
           ],
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () => showModalBottomSheet(
-              context: context,
-              builder: (BuildContext context) => const ChooseImageOptions()),
-          child: const Icon(Iconsax.scan),
-        ),
         bottomNavigationBar: NavBar(
             currentTab: layoutState.currentTab,
             onChangeTab: (value) => layoutState.onChangeTab(value)),

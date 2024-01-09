@@ -66,7 +66,8 @@ class BirdOverView extends StatelessWidget {
                       text: "Family : ",
                       style: TextStyle(color: AppColors.blackGrey)),
                   TextSpan(
-                      text: bird.family,
+                      text:
+                          "${bird.family?.familyName ?? "Unknow"} - ${bird.family?.familyVietnameseName ?? ""}",
                       style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: AppSize.f5,
@@ -81,7 +82,8 @@ class BirdOverView extends StatelessWidget {
                       text: "Bird Order : ",
                       style: TextStyle(color: AppColors.blackGrey)),
                   TextSpan(
-                      text: bird.birdOrder,
+                      text:
+                          "${bird.order?.orderName ?? "Unknow"} - ${bird.order?.orderVietnameseName ?? ""}",
                       style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: AppSize.f5,

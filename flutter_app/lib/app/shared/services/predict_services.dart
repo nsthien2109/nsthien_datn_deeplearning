@@ -2,6 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:njha_bird_detect/app/models/bird.dart';
+import 'package:njha_bird_detect/app/models/bird_family.dart';
+import 'package:njha_bird_detect/app/models/bird_order.dart';
+import 'package:njha_bird_detect/app/models/bird_status.dart';
 import 'package:njha_bird_detect/app/shared/services/api_config.dart';
 import 'package:njha_bird_detect/app/shared/utils/storage.dart';
 
@@ -19,12 +22,12 @@ Future<List<Bird>> handlePrediction(File file) async {
           commonName: element['common_name'],
           vietnameseName: element['vietnamese_name'],
           scientificName: element['scientific_name'],
-          birdOrder: element['bird_order'],
-          family: element['family'],
           description: element['description'],
           distribution: element['distribution'],
           diet: element['diet'],
-          conservationStatus: element['conservation_status'],
+          order: BirdOrder.fromJson(element['order']),
+          family: BirdFamily.fromJson(element['family']),
+          status: BirdStatus.fromJson(element['status']),
           confidence: double.parse(element['confidence'].toString()),
           className: element['class_name'],
           images: images));

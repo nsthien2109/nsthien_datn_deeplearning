@@ -1,16 +1,20 @@
+import 'package:njha_bird_detect/app/models/bird_family.dart';
+import 'package:njha_bird_detect/app/models/bird_order.dart';
+import 'package:njha_bird_detect/app/models/bird_status.dart';
+
 class Bird {
   int? id;
   String? commonName;
   String? vietnameseName;
   String? scientificName;
-  String? birdOrder;
-  String? family;
   String? description;
   String? distribution;
   String? diet;
-  String? conservationStatus;
   String? className;
   double? confidence;
+  BirdStatus? status;
+  BirdOrder? order;
+  BirdFamily? family;
   List<String>? images;
 
   Bird(
@@ -18,13 +22,13 @@ class Bird {
       this.commonName,
       this.vietnameseName,
       this.scientificName,
-      this.birdOrder,
-      this.family,
       this.description,
       this.distribution,
       this.diet,
-      this.conservationStatus,
       this.className,
+      this.status,
+      this.order,
+      this.family,
       this.confidence,
       this.images});
 
@@ -33,15 +37,17 @@ class Bird {
     commonName = json['common_name'];
     vietnameseName = json['vietnamese_name'];
     scientificName = json['scientific_name'];
-    birdOrder = json['bird_order'];
-    family = json['family'];
     description = json['description'];
     distribution = json['distribution'];
     diet = json['diet'];
-    conservationStatus = json['conservation_status'];
-    confidence = json['confidence'];
     className = json['class_name'];
+    confidence = json['confidence'];
     images = json['images'] != null ? json['images'].cast<String>() : [];
+    status =
+        json['status'] != null ? BirdStatus.fromJson(json['status']) : null;
+    order = json['order'] != null ? BirdOrder.fromJson(json['order']) : null;
+    family =
+        json['family'] != null ? BirdFamily.fromJson(json['family']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -50,15 +56,21 @@ class Bird {
     data['common_name'] = commonName;
     data['vietnamese_name'] = vietnameseName;
     data['scientific_name'] = scientificName;
-    data['bird_order'] = birdOrder;
-    data['family'] = family;
     data['description'] = description;
     data['distribution'] = distribution;
     data['diet'] = diet;
-    data['conservation_status'] = conservationStatus;
-    data['confidence'] = confidence;
     data['class_name'] = className;
+    data['confidence'] = confidence;
     data['images'] = images;
+    if (status != null) {
+      data['status'] = status!.toJson();
+    }
+    if (order != null) {
+      data['order'] = order!.toJson();
+    }
+    if (family != null) {
+      data['family'] = family!.toJson();
+    }
     return data;
   }
 }

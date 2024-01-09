@@ -86,8 +86,9 @@ class DetailScreen extends StatelessWidget {
                                       fontSize: AppSize.f2)),
                               Row(
                                 children: [
-                                  const Text("Order Bird",
-                                      style: TextStyle(color: Colors.white)),
+                                  Text(bird.order?.orderName ?? "Unknow",
+                                      style:
+                                          const TextStyle(color: Colors.white)),
                                   const SizedBox(width: 10),
                                   Container(
                                     width: 6,
@@ -97,8 +98,9 @@ class DetailScreen extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(6)),
                                   ),
                                   const SizedBox(width: 10),
-                                  const Text("Family Bird",
-                                      style: TextStyle(color: Colors.white)),
+                                  Text(bird.family?.familyName ?? "Unknow",
+                                      style:
+                                          const TextStyle(color: Colors.white)),
                                 ],
                               )
                             ],
@@ -137,7 +139,8 @@ class DetailScreen extends StatelessWidget {
                                 text: "Status : ",
                                 style: TextStyle(color: AppColors.blackGrey)),
                             TextSpan(
-                                text: bird.conservationStatus ?? "Unknow",
+                                text:
+                                    "${bird.status?.statusName ?? "Unknow"} - ${bird.status?.statusVietnameseName ?? ""}",
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: AppSize.f5,
