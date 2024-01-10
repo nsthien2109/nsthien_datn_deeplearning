@@ -19,7 +19,7 @@ class HomeCarousel extends StatelessWidget {
               Provider.of<HomeProvider>(context, listen: false)
                   .changePage(index);
             },
-            height: heightP(context) / 1.7),
+            height: heightP(context) / 1.9),
         items: data.map((bird) {
           return Stack(children: [
             GestureDetector(

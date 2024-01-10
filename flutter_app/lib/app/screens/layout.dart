@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:njha_bird_detect/app/screens/auth/auth.provider.dart';
 import 'package:njha_bird_detect/app/screens/explore/explore_screen.dart';
 import 'package:njha_bird_detect/app/screens/history/history_screen.dart';
 import 'package:njha_bird_detect/app/screens/home/home.dart';
 import 'package:njha_bird_detect/app/screens/layout.provider.dart';
 import 'package:njha_bird_detect/app/screens/profile/profile_screen.dart';
-import 'package:njha_bird_detect/app/shared/widgets/choose_image_options.dart';
 import 'package:njha_bird_detect/app/shared/widgets/login_required.dart';
 import 'package:njha_bird_detect/app/shared/widgets/nav_bar.dart';
 import 'package:provider/provider.dart';

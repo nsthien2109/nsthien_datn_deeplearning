@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:njha_bird_detect/app/screens/auth/login_screen.dart';
 import 'package:njha_bird_detect/app/screens/auth/register_screen.dart';
 import 'package:njha_bird_detect/app/screens/detail/detail_screen.dart';
+import 'package:njha_bird_detect/app/screens/filter/filter_screen.dart';
 import 'package:njha_bird_detect/app/screens/home/home.dart';
 import 'package:njha_bird_detect/app/screens/intro/intro_screen.dart';
 import 'package:njha_bird_detect/app/screens/layout.dart';
@@ -13,7 +14,7 @@ class AppRouter {
   static const String loginRoute = '/login';
   static const String registerRoute = '/register';
   static const String favoriteRoute = '/favorite';
-  static const String cartRouter = '/cart';
+  static const String filterRoute = '/filter';
   static const String detailRouter = '/detail';
   static const String resultRouter = '/result';
   static const String createStoreRouter = '/create-store';
@@ -43,6 +44,12 @@ class AppRouter {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => const DetailScreen(),
+        );
+
+      case filterRoute:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => const FilterScreen(),
         );
 
       case resultRouter:

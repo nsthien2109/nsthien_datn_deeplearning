@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:njha_bird_detect/app/screens/auth/auth.provider.dart';
 import 'package:njha_bird_detect/app/screens/explore/explore.provider.dart';
+import 'package:njha_bird_detect/app/screens/filter/filter.provider.dart';
 import 'package:njha_bird_detect/app/screens/home/home.provider.dart';
 import 'package:njha_bird_detect/app/screens/layout.provider.dart';
 import 'package:njha_bird_detect/app/screens/prediction/predict.provider.dart';
@@ -30,7 +31,8 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => LayoutProvider()),
           ChangeNotifierProvider(create: (_) => HomeProvider()),
           ChangeNotifierProvider(create: (_) => ExploreProvider()),
-          ChangeNotifierProvider(create: (_) => PredictProvider())
+          ChangeNotifierProvider(create: (_) => PredictProvider()),
+          ChangeNotifierProvider(create: (_) => FilterProvider()),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,

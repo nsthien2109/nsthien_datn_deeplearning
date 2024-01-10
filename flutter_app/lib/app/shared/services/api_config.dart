@@ -1,11 +1,14 @@
 class ApiConfig {
-  static const String BASE_URL = "http://localhost:8000/api";
+  static const String BASE_URL = "http://34.126.163.62/api";
 
   static const Map<String, String> RESOURCES = {
     'auth': 'auth',
     'birds': 'birds',
     'histories': 'histories',
-    'prediction': 'prediction'
+    'prediction': 'prediction',
+    'orders': 'orders',
+    'family': 'family',
+    'status': 'status'
   };
 
   static dynamic ENDPOINT = {
@@ -27,5 +30,14 @@ class ApiConfig {
       'index': '$BASE_URL/${RESOURCES['histories']}',
       'personal': '$BASE_URL/${RESOURCES['histories']}/user',
     },
+    'orders': {
+      'index': '$BASE_URL/${RESOURCES['orders']}',
+    },
+    'family': {
+      'index': '$BASE_URL/${RESOURCES['family']}',
+    },
+    'status': {
+      'index': '$BASE_URL/${RESOURCES['status']}',
+    }
   };
 }
