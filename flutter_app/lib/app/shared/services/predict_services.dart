@@ -15,27 +15,11 @@ Future<List<Bird>> handlePrediction(File file) async {
 
     final List<Bird> birds = [];
     for (var element in results) {
-      final List<String> images = [];
-      element['images'].forEach((item) => images.add(item));
-      birds.add(Bird(
-          id: element['id'],
-          commonName: element['common_name'],
-          vietnameseName: element['vietnamese_name'],
-          scientificName: element['scientific_name'],
-          description: element['description'],
-          distribution: element['distribution'],
-          diet: element['diet'],
-          order: BirdOrder.fromJson(element['order']),
-          family: BirdFamily.fromJson(element['family']),
-          status: BirdStatus.fromJson(element['status']),
-          confidence: double.parse(element['confidence'].toString()),
-          className: element['class_name'],
-          images: images));
+      element['confidence'] = element['confidence'].toDouble();
+      birds.add(Bird.fromJson(element));
     }
-
     return birds;
   } catch (e) {
-    print(e);
     rethrow;
   }
 }

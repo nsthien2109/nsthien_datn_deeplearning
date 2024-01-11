@@ -9,8 +9,6 @@ Future<BirdResponse> getBirds(int page) async {
   final birdData = response['results'] as List<dynamic>;
   final List<Bird> birds = [];
   for (var element in birdData) {
-    final List<String> images = [];
-    element['images'].forEach((item) => images.add(item));
     birds.add(Bird.fromJson(element));
   }
   return BirdResponse(

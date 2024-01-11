@@ -33,6 +33,7 @@ class Bird {
       this.images});
 
   Bird.fromJson(Map<String, dynamic> json) {
+    print(json);
     id = json['id'];
     commonName = json['common_name'];
     vietnameseName = json['vietnamese_name'];

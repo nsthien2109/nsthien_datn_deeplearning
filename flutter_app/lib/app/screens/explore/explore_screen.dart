@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:njha_bird_detect/app/screens/explore/explore.provider.dart';
 import 'package:njha_bird_detect/app/screens/explore/widgets/bird_list.dart';
 import 'package:njha_bird_detect/app/shared/utils/theme.dart';
@@ -28,7 +29,7 @@ class ExploreScreen extends StatelessWidget {
             )),
         actions: [
           IconButton(
-              icon: const Icon(Icons.search, color: AppColors.blackGrey),
+              icon: const Icon(Iconsax.filter, color: AppColors.blackGrey),
               onPressed: () => Navigator.pushNamed(context, '/filter')),
         ],
       ),

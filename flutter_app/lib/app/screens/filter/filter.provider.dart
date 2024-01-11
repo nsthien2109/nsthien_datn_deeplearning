@@ -15,6 +15,15 @@ class FilterProvider extends ChangeNotifier {
   List<BirdFamily> get birdFamilies => _birdFamilies;
   List<BirdOrder> get birdOrders => _birdOrders;
 
+  BirdOrder _orderDetail = BirdOrder();
+  BirdOrder get orderDetail => _orderDetail;
+
+  BirdStatus _statusDetail = BirdStatus();
+  BirdStatus get statusDetail => _statusDetail;
+
+  BirdFamily _birdFamily = BirdFamily();
+  BirdFamily get birdFamily => _birdFamily;
+
   FilterProvider() {
     getAllStatus();
     getAllFamilies();
@@ -31,10 +40,31 @@ class FilterProvider extends ChangeNotifier {
     }
   }
 
+  Future<void> getStatus(int id) async {
+    try {
+      var status = await getBirdStatus(id);
+      _statusDetail = status ?? BirdStatus();
+      notifyListeners();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<void> getAllFamilies() async {
     try {
       var familyData = await getBirdFamilies();
       _birdFamilies = familyData ?? [];
+      notifyListeners();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+
+  Future<void> getFamily(int id) async {
+    try {
+      var family = await getBirdFamily(id);
+      _birdFamily = family ?? BirdFamily();
       notifyListeners();
     } catch (e) {
       rethrow;
@@ -50,4 +80,16 @@ class FilterProvider extends ChangeNotifier {
       rethrow;
     }
   }
+
+  Future<void> getOrder(int id) async {
+    try {
+      var order = await getBirdOrder(id);
+      _orderDetail = order ?? BirdOrder();
+      notifyListeners();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+
 }

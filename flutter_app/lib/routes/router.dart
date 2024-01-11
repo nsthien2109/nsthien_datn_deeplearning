@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:njha_bird_detect/app/screens/auth/login_screen.dart';
 import 'package:njha_bird_detect/app/screens/auth/register_screen.dart';
 import 'package:njha_bird_detect/app/screens/detail/detail_screen.dart';
+import 'package:njha_bird_detect/app/screens/filter/filter_bird_screen.dart';
 import 'package:njha_bird_detect/app/screens/filter/filter_screen.dart';
+import 'package:njha_bird_detect/app/screens/filter/filter_type_screen.dart';
 import 'package:njha_bird_detect/app/screens/home/home.dart';
 import 'package:njha_bird_detect/app/screens/intro/intro_screen.dart';
 import 'package:njha_bird_detect/app/screens/layout.dart';
@@ -15,6 +17,7 @@ class AppRouter {
   static const String registerRoute = '/register';
   static const String favoriteRoute = '/favorite';
   static const String filterRoute = '/filter';
+  static const String filterTypeRoute = '/filter-type';
   static const String detailRouter = '/detail';
   static const String resultRouter = '/result';
   static const String createStoreRouter = '/create-store';
@@ -51,6 +54,18 @@ class AppRouter {
           settings: settings,
           builder: (_) => const FilterScreen(),
         );
+
+      case filterTypeRoute:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => const FilterTypeScreen(),
+        );
+
+      // case filterBirdRoute:
+      //   return MaterialPageRoute(
+      //     settings: settings,
+      //     builder: (_) => const FilterBirdScreen(),
+      //   );
 
       case resultRouter:
         return MaterialPageRoute(
