@@ -38,10 +38,23 @@ class BirdTypeItem extends StatelessWidget {
       return 'Not instance of any type';
     }
 
+    String title () {
+      if(data is BirdOrder){
+        return "Bird Orders";
+      }
+      if(data is BirdFamily){
+        return "Bird Families";
+      }
+      if(data is BirdStatus){
+        return "Bird Status";
+      }
+      return 'Details';
+    }
+
     return GestureDetector(
       onTap: () => Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const FilterBirdScreen()),
+        MaterialPageRoute(builder: (context) => FilterBirdScreen(title : title(),data: data)),
       ),
       child: Card(
           shape: RoundedRectangleBorder(
