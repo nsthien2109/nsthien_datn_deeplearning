@@ -1,6 +1,4 @@
 import 'package:njha_bird_detect/app/models/bird.dart';
-import 'package:njha_bird_detect/app/models/bird_family.dart';
-import 'package:njha_bird_detect/app/models/bird_order.dart';
 
 class BirdStatus {
   int? id;

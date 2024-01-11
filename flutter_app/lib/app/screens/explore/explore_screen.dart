@@ -29,7 +29,7 @@ class ExploreScreen extends StatelessWidget {
         actions: [
           IconButton(
               icon: const Icon(Icons.search, color: AppColors.blackGrey),
-              onPressed: () {}),
+              onPressed: () => Navigator.pushNamed(context, '/filter')),
         ],
       ),
       body: Consumer<ExploreProvider>(builder: (context, exploreState, _) {
