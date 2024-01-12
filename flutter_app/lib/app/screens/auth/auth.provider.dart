@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:njha_bird_detect/app/models/auth.dart';
+import 'package:njha_bird_detect/app/models/history.dart';
 import 'package:njha_bird_detect/app/shared/services/auth_services.dart';
 import 'package:njha_bird_detect/app/shared/utils/storage.dart';
 import 'package:njha_bird_detect/app/shared/widgets/toast.dart';
@@ -9,6 +10,9 @@ import 'package:njha_bird_detect/app/shared/widgets/toast.dart';
 class AuthProvider extends ChangeNotifier {
   Auth? _auth = Auth();
   Auth? get auth => _auth;
+
+  List<History>? _histories = [];
+  List<History>? get histories => _histories;
 
   final _formKeySignIn = GlobalKey<FormState>();
   GlobalKey<FormState> get formKeySignIn => _formKeySignIn;
@@ -65,6 +69,31 @@ class AuthProvider extends ChangeNotifier {
         showToast(context, e.toString());
         debugPrint("Error in register provider:  $e");
       }
+    }
+  }
+
+  Future<void> getHistoriesData() async {
+    try {
+      if (auth?.accessToken != null) {
+        final List<History>? historiesData = await getHistories();
+        _histories = historiesData;
+        notifyListeners();
+      }
+    } catch (e) {
+      debugPrint("Error in get history provider:  $e");
+    }
+  }
+
+  Future<void> deleteHistoryUser(int id) async {
+    try {
+      if (auth?.accessToken != null) {
+        final bool deleted = await deleteHistory(id);
+        if (deleted == true) {
+          await getHistoriesData();
+        }
+      }
+    } catch (e) {
+      debugPrint("Error in delete history provider:  $e");
     }
   }
 

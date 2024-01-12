@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 import 'package:njha_bird_detect/app/models/history.dart';
+import 'package:njha_bird_detect/app/screens/auth/auth.provider.dart';
 import 'package:njha_bird_detect/app/shared/utils/cache_image.dart';
 import 'package:njha_bird_detect/app/shared/utils/theme.dart';
+import 'package:provider/provider.dart';
 
 class HistoryItem extends StatelessWidget {
   History history;
@@ -66,7 +68,10 @@ class HistoryItem extends StatelessWidget {
                 ),
                 const SizedBox(width: 15),
                 IconButton(
-                    onPressed: () {}, icon: const Icon(Iconsax.minus_cirlce))
+                    onPressed: () => context
+                        .read<AuthProvider>()
+                        .deleteHistoryUser(history.id!),
+                    icon: const Icon(Iconsax.minus_cirlce))
               ],
             )),
       ),

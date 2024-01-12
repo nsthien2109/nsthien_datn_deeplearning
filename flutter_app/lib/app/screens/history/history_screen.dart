@@ -1,10 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:njha_bird_detect/app/screens/auth/auth.provider.dart';
+import 'package:njha_bird_detect/app/screens/history/widgets/history_empty.dart';
 import 'package:njha_bird_detect/app/screens/history/widgets/history_list.dart';
 import 'package:provider/provider.dart';
 
-class HistoryScreen extends StatelessWidget {
+class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
+
+  @override
+  State<HistoryScreen> createState() => _HistoryScreenState();
+}
+
+class _HistoryScreenState extends State<HistoryScreen> {
+  @override
+  void initState() {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    authProvider.getHistoriesData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +40,11 @@ class HistoryScreen extends StatelessWidget {
             )),
       ),
       body: Consumer<AuthProvider>(builder: (context, authState, _) {
-        return HistoryList(
-            histories: authState.auth?.userData?.histories ?? []);
+        return authState.histories!.length < 1
+            ? const HistoryEmpty()
+            : HistoryList(histories: authState.histories ?? []);
       }),
     );
+    ;
   }
 }
